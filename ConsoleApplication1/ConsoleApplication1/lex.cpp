@@ -1,6 +1,12 @@
 #line 2 "lex.cpp"
+#line 4 "lex.l"
+	
+	#pragma warning(disable: 4996)
 
-#line 4 "lex.cpp"
+
+
+
+#line 10 "lex.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -332,8 +338,6 @@ void yyfree (void *  );
 
 #define YY_AT_BOL() (YY_CURRENT_BUFFER_LVALUE->yy_at_bol)
 
-/* Begin user sect3 */
-
 #define yywrap() 1
 #define YY_SKIP_YYWRAP
 
@@ -365,8 +369,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 4
-#define YY_END_OF_BUFFER 5
+#define YY_NUM_RULES 5
+#define YY_END_OF_BUFFER 6
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -374,9 +378,9 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static yyconst flex_int16_t yy_accept[9] =
+static yyconst flex_int16_t yy_accept[10] =
     {   0,
-        0,    0,    5,    3,    2,    1,    1,    0
+        0,    0,    6,    4,    3,    2,    1,    1,    0
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
@@ -385,16 +389,16 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    3,    3,    1,    3,    1,    3,    4,    4,    4,
+        4,    4,    4,    4,    4,    4,    4,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    3,    3,    3,    3,    3,    3,
-        3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
-        3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
-        1,    1,    1,    1,    1,    1,    3,    3,    3,    3,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
 
-        3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
-        3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
-        3,    3,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -411,29 +415,31 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst flex_int32_t yy_meta[4] =
+static yyconst flex_int32_t yy_meta[5] =
     {   0,
-        1,    1,    2
+        1,    1,    1,    2
     } ;
 
-static yyconst flex_int16_t yy_base[10] =
+static yyconst flex_int16_t yy_base[11] =
     {   0,
-        0,    0,    5,    6,    6,    0,    0,    6,    2
+        0,    0,    6,    7,    7,    7,    0,    0,    7,    3
     } ;
 
-static yyconst flex_int16_t yy_def[10] =
+static yyconst flex_int16_t yy_def[11] =
     {   0,
-        8,    1,    8,    8,    8,    9,    9,    0,    8
+        9,    1,    9,    9,    9,    9,   10,   10,    0,    9
     } ;
 
-static yyconst flex_int16_t yy_nxt[10] =
+static yyconst flex_int16_t yy_nxt[12] =
     {   0,
-        4,    5,    6,    7,    8,    3,    8,    8,    8
+        4,    5,    6,    7,    8,    9,    3,    9,    9,    9,
+        9
     } ;
 
-static yyconst flex_int16_t yy_chk[10] =
+static yyconst flex_int16_t yy_chk[12] =
     {   0,
-        1,    1,    1,    9,    3,    8,    8,    8,    8
+        1,    1,    1,    1,   10,    3,    9,    9,    9,    9,
+        9
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -451,14 +457,14 @@ int yy_flex_debug = 0;
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
 #line 1 "lex.l"
-#line 4 "lex.l"
-	#pragma warning(disable: 4996)
-	#include <iostream>
 
-	int chars = 0;
-	int words = 0;
-	int lines = 0;
-#line 462 "lex.cpp"
+#line 10 "lex.l"
+	#include <cstdlib>
+	#include "bison.hpp"
+	
+	// this function will be generated using bison
+	extern int yyparse();
+#line 468 "lex.cpp"
 
 #define INITIAL 0
 
@@ -667,9 +673,9 @@ YY_DECL
 		}
 
 	{
-#line 12 "lex.l"
+#line 21 "lex.l"
 
-#line 673 "lex.cpp"
+#line 679 "lex.cpp"
 
 	while ( 1 )		/* loops until end-of-file is reached */
 		{
@@ -696,13 +702,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 9 )
+				if ( yy_current_state >= 10 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 6 );
+		while ( yy_base[yy_current_state] != 7 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -728,26 +734,34 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 13 "lex.l"
-{ words++; chars += strlen(yytext); }
+#line 22 "lex.l"
+{ 
+				yylval.dbl = atof(yytext); 
+				return LITERAL_DBL;
+			}
 	YY_BREAK
 case 2:
-/* rule 2 can match eol */
 YY_RULE_SETUP
-#line 14 "lex.l"
-{ chars++; lines++; }
+#line 27 "lex.l"
+{ return yytext[0];  }
 	YY_BREAK
 case 3:
+/* rule 3 can match eol */
 YY_RULE_SETUP
-#line 15 "lex.l"
-
+#line 28 "lex.l"
+{ return '\n'; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 17 "lex.l"
+#line 29 "lex.l"
+
+	YY_BREAK
+case 5:
+YY_RULE_SETUP
+#line 30 "lex.l"
 ECHO;
 	YY_BREAK
-#line 751 "lex.cpp"
+#line 765 "lex.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1040,7 +1054,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 9 )
+			if ( yy_current_state >= 10 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -1068,11 +1082,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 9 )
+		if ( yy_current_state >= 10 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 8);
+	yy_is_jam = (yy_current_state == 9);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1742,18 +1756,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 17 "lex.l"
-
-
-
-int main()
-{
-	yylex();
-
-	std::cout << "Characters: " << chars 
-				<<", words: " << words
-					<< ", lines: " << lines << std::endl;
-
-	return 0;
-}
-
+#line 30 "lex.l"

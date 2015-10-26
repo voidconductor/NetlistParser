@@ -1,28 +1,29 @@
 %option noyywrap
 
-%{
+%top{
+	
 	#pragma warning(disable: 4996)
-	#include <iostream>
 
-	int chars = 0;
-	int words = 0;
-	int lines = 0;
+}
+
+%{
+	#include <cstdlib>
+	#include "bison.hpp"
+	
+	// this function will be generated using bison
+	extern int yyparse();
 %}
 
-%% 
-[a-zA-Z]+		{ words++; chars += strlen(yytext); }
-\n				{ chars++; lines++; }
-.
+digits	[0-9]+
+binopr	[-+*/]
+parenthesis [()]
 
 %%
+{digits}	{ 
+				yylval.dbl = atof(yytext); 
+				return LITERAL_DBL;
+			}
 
-int main()
-{
-	yylex();
-
-	std::cout << "Characters: " << chars 
-				<<", words: " << words
-					<< ", lines: " << lines << std::endl;
-
-	return 0;
-}
+{binopr}	{ return yytext[0];  }
+\n			{ return '\n'; }
+.		

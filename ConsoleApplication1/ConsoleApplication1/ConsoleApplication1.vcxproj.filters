@@ -40,5 +40,8 @@
     <ClInclude Include="bison.hpp">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="fb3-1.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

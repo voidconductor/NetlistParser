@@ -136,6 +136,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(BISONFLEX_INC)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,6 +151,10 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">flex –o%(Filename).cpp %(Identity)</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cpp</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">lex.l</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">flex –o%(Filename).cpp %(Identity)</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Flex</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).cpp</Outputs>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -164,13 +169,17 @@
   <ItemGroup>
     <CustomBuild Include="bison.y">
       <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Bison -o%(Filename).cpp %(Identity)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Bison -d -o%(Filename).cpp %(Identity)</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cpp;%(Filename).hpp</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">bison.y</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">bison</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Bison -o%(Filename).cpp %(Identity)</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Bison</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).cpp;%(Filename).hpp</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bison.hpp" />
+    <ClInclude Include="fb3-1.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

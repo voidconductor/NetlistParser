@@ -45,7 +45,8 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    LITERAL_DBL = 258
+    NUMBER = 258,
+    EOL = 259
   };
 #endif
 
@@ -54,11 +55,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 18 "bison.y" /* yacc.c:1909  */
+#line 7 "bison.y" /* yacc.c:1909  */
 
-	double dbl;
+	struct ast *a;
+	double d;
 
-#line 62 "bison.hpp" /* yacc.c:1909  */
+#line 64 "bison.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

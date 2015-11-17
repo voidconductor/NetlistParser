@@ -1,29 +1,28 @@
-%option noyywrap
-
-%top{
-	
-	#pragma warning(disable: 4996)
-
-}
+%option noyywrap nodefault yylineno
 
 %{
-	#include <cstdlib>
 	#include "bison.hpp"
-	
-	// this function will be generated using bison
-	extern int yyparse();
+	#include "fb3-1.h"
 %}
 
-digits	[0-9]+
-binopr	[-+*/]
-parenthesis [()]
+EXP		([Ee][-+]?[0-9]+)
 
 %%
-{digits}	{ 
-				yylval.dbl = atof(yytext); 
-				return LITERAL_DBL;
-			}
 
-{binopr}	{ return yytext[0];  }
-\n			{ return '\n'; }
-.		
+"+"	|
+"-" |
+"*" |
+"/" |
+"|" |
+"(" |
+")"		{return yytext[0];  }
+
+[0-9]+"."[0-9]*{EXP}? |
+"."?[0-9]+{EXP}? { yylval.d = atof(yytext); return NUMBER; }
+
+\n	{return EOL; }
+"//".*
+[ \t]	{}
+.		{ yyerror("Mystery character %c\n", *yytext);}
+
+%%

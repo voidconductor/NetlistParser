@@ -18,21 +18,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="lex.l">
-      <Filter>lex_bison</Filter>
-    </CustomBuild>
-    <CustomBuild Include="bison.y">
-      <Filter>lex_bison</Filter>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="lex.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
     <ClCompile Include="bison.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="functions.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
@@ -40,8 +32,16 @@
     <ClInclude Include="bison.hpp">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="fb3-1.h">
+    <ClInclude Include="symtab.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="lex.l">
+      <Filter>lex_bison</Filter>
+    </CustomBuild>
+    <CustomBuild Include="bison.y">
+      <Filter>lex_bison</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>

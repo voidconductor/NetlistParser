@@ -1,28 +1,29 @@
-%option noyywrap nodefault yylineno
+%option noyywrap
 
 %{
 	#include "bison.hpp"
-	#include "fb3-1.h"
+	#include "symtab.h"
 %}
 
-EXP		([Ee][-+]?[0-9]+)
-
 %%
+"module"		{ return MODULE;}
+"endmodule"		{ return ENDMODULE;}
+"input"			{ return INPUT;}
+"output"		{ return OUTPUT;}
+"wire"			{ return WIRE;}
+"reg"			{ return REG;}
 
-"+"	|
-"-" |
-"*" |
-"/" |
-"|" |
-"(" |
-")"		{return yytext[0];  }
-
-[0-9]+"."[0-9]*{EXP}? |
-"."?[0-9]+{EXP}? { yylval.d = atof(yytext); return NUMBER; }
-
-\n	{return EOL; }
-"//".*
-[ \t]	{}
-.		{ yyerror("Mystery character %c\n", *yytext);}
-
+[A-Za-z][\_A-Za-z0-9]*	{
+							struct symbol *sp = lookup(yytext);
+							yylval.symp = sp;
+							return NAME;
+						}
+[0-9]+					{
+							yylval.size_arr = atoi(yytext);
+							return SIZE_A;
+						}
+[ \t\n]					{}
+"//".*					{}
+";"		|
+.		return yytext[0];
 %%

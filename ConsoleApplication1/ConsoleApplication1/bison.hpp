@@ -45,8 +45,14 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    NUMBER = 258,
-    EOL = 259
+    NAME = 258,
+    SIZE_A = 259,
+    MODULE = 260,
+    ENDMODULE = 261,
+    INPUT = 262,
+    OUTPUT = 263,
+    WIRE = 264,
+    REG = 265
   };
 #endif
 
@@ -55,12 +61,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 7 "bison.y" /* yacc.c:1909  */
+#line 13 "bison.y" /* yacc.c:1909  */
 
-	struct ast *a;
-	double d;
+	struct symbol *symp;
+	int size_arr;
+	char * arguments;
 
-#line 64 "bison.hpp" /* yacc.c:1909  */
+#line 71 "bison.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

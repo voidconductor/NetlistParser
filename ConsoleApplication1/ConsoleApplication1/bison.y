@@ -7,7 +7,9 @@
 	extern int yylex();
 	extern void yyerror(char *s);
 
-	char tmp[256];
+	char tmp1[256];
+	char tmp2[256];
+	char tmp3[256];
 %}
 
 %union {
@@ -39,7 +41,6 @@ netlist:	/*Стартовый символ*/
 	;
 
 dev_mod:	MODULE NAME args ';' def_list ENDMODULE	{
-														printf("module %s found\n", $2->name);
 														$2->type = "module";
 													}
 	;
@@ -60,11 +61,11 @@ wire_list:	NAME ',' NAME   {$1->type = "wire"; $1->size = 1;
 							 $3->type = "wire"; $3->size = 1;}
 	|		wire_list ',' NAME	{ $3->type = "wire"; $3->size = 1;}
 	;
-conn_list:	'.'NAME '('s_name')'	{sprintf(tmp,"%s to %s", $2->name,$4);$$ = tmp;}
-	|		conn_list ',' '.'NAME '('s_name')' {sprintf(tmp,"%s, %s to %s", $1, $4->name, $6); $$ = tmp;}
+conn_list:	'.'NAME '('s_name')'	{sprintf(tmp1, "%s to %s",$2->name,$4); $$ = strdup(tmp1);}
+	|		conn_list ',' '.'NAME '('s_name')' {sprintf(tmp2,"%s, %s to %s", $1, $4->name, $6); $$ = strdup(tmp2);}
 	;
 s_name:		NAME	{$$ = $1->name;}
-	|		NAME '[' SIZE_A ']' {sprintf(tmp, "%s[%i]",$1->name,$3); $$ = tmp;}
+	|		NAME '[' SIZE_A ']' {sprintf(tmp3, "%s[%i]",$1->name,$3); $$ = strdup(tmp3);}
 	;
 range:			{ $$ = 1;}
 	|			'[' SIZE_A ':' SIZE_A ']'	{
@@ -77,7 +78,7 @@ range:			{ $$ = 1;}
 definition:		INPUT range NAME ';' { $3->type = "input"; $3->size = $2;}
 	|			OUTPUT range NAME ';' { $3->type = "output"; $3->size = $2;}
 	|			WIRE wire_list ';'
-	|			WIRE range NAME ';'	{$3->type = "output"; $3->size = $2;}
+	|			WIRE range NAME ';'	{$3->type = "wire"; $3->size = $2;}
 	|			REG range NAME ';'	{ $3->type = "reg"; $3->size = $2;}
 	|			NAME NAME args ';'	{
 										$1->type = "Module type";
@@ -90,21 +91,127 @@ definition:		INPUT range NAME ';' { $3->type = "input"; $3->size = $2;}
 	;
 %%
 
+void printnode(struct symbol *node, FILE *result)
+{
+	fprintf(result,"=======================================\n");
+	fprintf(result,"Object: %s\n", node->name);
+	fprintf(result,"Type: %s\n", node->type);
+	fprintf(result,"Connections: %s\n", node->connections);
+	fprintf(result,"Size in bits: %i\n", node->size);
+	fprintf(result,"Used times: %i\n", node->count);
+}
+
 void main(int argc, char **argv)
 {
 	yyparse();
+	FILE *result;
+	char *mode = "w";
+
+	int total_names = 0;
+	int printed_names= 0;
+	int used_indexes[NHASH];
+	char * to_comp;
+
+	result = fopen("result.txt", mode);
+	if(result == NULL)
+	{
+		printf("Cannot open a file\n");
+		exit(1);
+	}
 	for(int i = 0; i < NHASH; i++)
 	{
-		if(symtab[i].name != NULL)
+		if((symtab[i].name != NULL) && (symtab[i].type != "pin"))
 		{
-			printf("Object: %s\n", symtab[i].name);
-			printf("Type: %s\n", symtab[i].type);
-			printf("Connections: %s\n", symtab[i].connections);
-			printf("Size in bits: %i\n", symtab[i].size);
-			printf("Used times: %i\n", symtab[i].count);
-			printf("=======================================\n");
+			used_indexes[total_names] = i;
+			total_names++;
 		}
 	}
+	
+	fprintf(result,"Modules:\n");
+	for(int i = 0; i < total_names; i++)
+	{
+		if(symtab[used_indexes[i]].type == "module")
+		{
+			printnode(&symtab[used_indexes[i]],result);
+			printed_names++;
+		}
+	}
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"Wires:\n");
+	for(int i = 0; i < total_names; i++)
+	{
+		if(symtab[used_indexes[i]].type == "wire")
+		{
+			printnode(&symtab[used_indexes[i]],result);
+			printed_names++;
+		}
+	}
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"Inputs:\n");
+	for(int i = 0; i < total_names; i++)
+	{
+		if(symtab[used_indexes[i]].type == "input")
+		{
+			printnode(&symtab[used_indexes[i]],result);
+			printed_names++;
+		}
+	}
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"Outputs:\n");
+	for(int i = 0; i < total_names; i++)
+	{
+		if(symtab[used_indexes[i]].type == "output")
+		{
+			printnode(&symtab[used_indexes[i]],result);
+			printed_names++;
+		}
+	}
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"Registers:\n");
+	for(int i = 0; i < total_names; i++)
+	{
+		if(symtab[used_indexes[i]].type == "reg")
+		{
+			printnode(&symtab[used_indexes[i]],result);
+			printed_names++;
+		}
+	}
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"Module types:\n");
+	for(int i = 0; i < total_names; i++)
+	{
+		if(symtab[used_indexes[i]].type == "Module type")
+		{
+			printnode(&symtab[used_indexes[i]],result);
+			printed_names++;
+		}
+	}
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"Declarations:\n");
+	for(int i = 0; i < total_names; i++)
+	{
+		if((symtab[used_indexes[i]].type != "Module type") &&
+		   (symtab[used_indexes[i]].type != "reg") &&
+		   (symtab[used_indexes[i]].type != "output") &&
+		   (symtab[used_indexes[i]].type != "input") &&
+		   (symtab[used_indexes[i]].type != "wire") &&
+		   (symtab[used_indexes[i]].type != "module"))
+		{
+			printnode(&symtab[used_indexes[i]],result);
+			printed_names++;
+		}
+	}
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"*******************************************************\n");
+	printf("Result is written to file \"result.txt\"\n");
+	printf("Total names: %i, printed names: %i\n", total_names, printed_names);
+	fclose(result);
 }
 extern void yyerror(char * s)
 {

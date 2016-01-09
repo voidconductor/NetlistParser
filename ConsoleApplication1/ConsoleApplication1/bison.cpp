@@ -72,9 +72,11 @@
 	extern int yylex();
 	extern void yyerror(char *s);
 
-	char tmp[256];
+	char tmp1[256];
+	char tmp2[256];
+	char tmp3[256];
 
-#line 78 "bison.cpp" /* yacc.c:339  */
+#line 80 "bison.cpp" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -125,13 +127,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 13 "bison.y" /* yacc.c:355  */
+#line 15 "bison.y" /* yacc.c:355  */
 
 	struct symbol *symp;
 	int size_arr;
 	char * arguments;
 
-#line 135 "bison.cpp" /* yacc.c:355  */
+#line 137 "bison.cpp" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -148,7 +150,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 152 "bison.cpp" /* yacc.c:358  */
+#line 154 "bison.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -446,9 +448,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    36,    36,    37,    38,    41,    47,    48,    51,    52,
-      55,    56,    59,    61,    63,    64,    66,    67,    69,    70,
-      77,    78,    79,    80,    81,    82
+       0,    38,    38,    39,    40,    43,    48,    49,    52,    53,
+      56,    57,    60,    62,    64,    65,    67,    68,    70,    71,
+      78,    79,    80,    81,    82,    83
 };
 #endif
 
@@ -1257,100 +1259,99 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 41 "bison.y" /* yacc.c:1646  */
+#line 43 "bison.y" /* yacc.c:1646  */
     {
-														printf("module %s found\n", (yyvsp[-4].symp)->name);
 														(yyvsp[-4].symp)->type = "module";
 													}
-#line 1266 "bison.cpp" /* yacc.c:1646  */
+#line 1267 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 52 "bison.y" /* yacc.c:1646  */
+#line 53 "bison.y" /* yacc.c:1646  */
     {(yyval.arguments) = (yyvsp[-1].arguments);}
-#line 1272 "bison.cpp" /* yacc.c:1646  */
+#line 1273 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 59 "bison.y" /* yacc.c:1646  */
+#line 60 "bison.y" /* yacc.c:1646  */
     {(yyvsp[-2].symp)->type = "wire"; (yyvsp[-2].symp)->size = 1; 
 							 (yyvsp[0].symp)->type = "wire"; (yyvsp[0].symp)->size = 1;}
-#line 1279 "bison.cpp" /* yacc.c:1646  */
+#line 1280 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 61 "bison.y" /* yacc.c:1646  */
+#line 62 "bison.y" /* yacc.c:1646  */
     { (yyvsp[0].symp)->type = "wire"; (yyvsp[0].symp)->size = 1;}
-#line 1285 "bison.cpp" /* yacc.c:1646  */
+#line 1286 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 63 "bison.y" /* yacc.c:1646  */
-    {sprintf(tmp,"%s to %s", (yyvsp[-3].symp)->name,(yyvsp[-1].arguments));(yyval.arguments) = tmp;}
-#line 1291 "bison.cpp" /* yacc.c:1646  */
+#line 64 "bison.y" /* yacc.c:1646  */
+    {sprintf(tmp1, "%s to %s",(yyvsp[-3].symp)->name,(yyvsp[-1].arguments)); (yyval.arguments) = strdup(tmp1);}
+#line 1292 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 64 "bison.y" /* yacc.c:1646  */
-    {sprintf(tmp,"%s, %s to %s", (yyvsp[-6].arguments), (yyvsp[-3].symp)->name, (yyvsp[-1].arguments)); (yyval.arguments) = tmp;}
-#line 1297 "bison.cpp" /* yacc.c:1646  */
+#line 65 "bison.y" /* yacc.c:1646  */
+    {sprintf(tmp2,"%s, %s to %s", (yyvsp[-6].arguments), (yyvsp[-3].symp)->name, (yyvsp[-1].arguments)); (yyval.arguments) = strdup(tmp2);}
+#line 1298 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 66 "bison.y" /* yacc.c:1646  */
+#line 67 "bison.y" /* yacc.c:1646  */
     {(yyval.arguments) = (yyvsp[0].symp)->name;}
-#line 1303 "bison.cpp" /* yacc.c:1646  */
+#line 1304 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 67 "bison.y" /* yacc.c:1646  */
-    {sprintf(tmp, "%s[%i]",(yyvsp[-3].symp)->name,(yyvsp[-1].size_arr)); (yyval.arguments) = tmp;}
-#line 1309 "bison.cpp" /* yacc.c:1646  */
+#line 68 "bison.y" /* yacc.c:1646  */
+    {sprintf(tmp3, "%s[%i]",(yyvsp[-3].symp)->name,(yyvsp[-1].size_arr)); (yyval.arguments) = strdup(tmp3);}
+#line 1310 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 69 "bison.y" /* yacc.c:1646  */
+#line 70 "bison.y" /* yacc.c:1646  */
     { (yyval.size_arr) = 1;}
-#line 1315 "bison.cpp" /* yacc.c:1646  */
+#line 1316 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 70 "bison.y" /* yacc.c:1646  */
+#line 71 "bison.y" /* yacc.c:1646  */
     {
 												if((yyvsp[-3].size_arr)>(yyvsp[-1].size_arr))
 													(yyval.size_arr) = (yyvsp[-3].size_arr);
 												else
 													(yyval.size_arr) = (yyvsp[-1].size_arr);
 											}
-#line 1326 "bison.cpp" /* yacc.c:1646  */
+#line 1327 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 77 "bison.y" /* yacc.c:1646  */
+#line 78 "bison.y" /* yacc.c:1646  */
     { (yyvsp[-1].symp)->type = "input"; (yyvsp[-1].symp)->size = (yyvsp[-2].size_arr);}
-#line 1332 "bison.cpp" /* yacc.c:1646  */
+#line 1333 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 78 "bison.y" /* yacc.c:1646  */
+#line 79 "bison.y" /* yacc.c:1646  */
     { (yyvsp[-1].symp)->type = "output"; (yyvsp[-1].symp)->size = (yyvsp[-2].size_arr);}
-#line 1338 "bison.cpp" /* yacc.c:1646  */
+#line 1339 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 80 "bison.y" /* yacc.c:1646  */
-    {(yyvsp[-1].symp)->type = "output"; (yyvsp[-1].symp)->size = (yyvsp[-2].size_arr);}
-#line 1344 "bison.cpp" /* yacc.c:1646  */
+#line 81 "bison.y" /* yacc.c:1646  */
+    {(yyvsp[-1].symp)->type = "wire"; (yyvsp[-1].symp)->size = (yyvsp[-2].size_arr);}
+#line 1345 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 81 "bison.y" /* yacc.c:1646  */
+#line 82 "bison.y" /* yacc.c:1646  */
     { (yyvsp[-1].symp)->type = "reg"; (yyvsp[-1].symp)->size = (yyvsp[-2].size_arr);}
-#line 1350 "bison.cpp" /* yacc.c:1646  */
+#line 1351 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 82 "bison.y" /* yacc.c:1646  */
+#line 83 "bison.y" /* yacc.c:1646  */
     {
 										(yyvsp[-3].symp)->type = "Module type";
 										(yyvsp[-3].symp)->size = 0;
@@ -1359,11 +1360,11 @@ yyreduce:
 										(yyvsp[-2].symp)->size = 0;
 										(yyvsp[-2].symp)->connections = (yyvsp[-1].arguments);
 									}
-#line 1363 "bison.cpp" /* yacc.c:1646  */
+#line 1364 "bison.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1367 "bison.cpp" /* yacc.c:1646  */
+#line 1368 "bison.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1591,24 +1592,130 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 91 "bison.y" /* yacc.c:1906  */
+#line 92 "bison.y" /* yacc.c:1906  */
 
+
+void printnode(struct symbol *node, FILE *result)
+{
+	fprintf(result,"=======================================\n");
+	fprintf(result,"Object: %s\n", node->name);
+	fprintf(result,"Type: %s\n", node->type);
+	fprintf(result,"Connections: %s\n", node->connections);
+	fprintf(result,"Size in bits: %i\n", node->size);
+	fprintf(result,"Used times: %i\n", node->count);
+}
 
 void main(int argc, char **argv)
 {
 	yyparse();
+	FILE *result;
+	char *mode = "w";
+
+	int total_names = 0;
+	int printed_names= 0;
+	int used_indexes[NHASH];
+	char * to_comp;
+
+	result = fopen("result.txt", mode);
+	if(result == NULL)
+	{
+		printf("Cannot open a file\n");
+		exit(1);
+	}
 	for(int i = 0; i < NHASH; i++)
 	{
-		if(symtab[i].name != NULL)
+		if((symtab[i].name != NULL) && (symtab[i].type != "pin"))
 		{
-			printf("Object: %s\n", symtab[i].name);
-			printf("Type: %s\n", symtab[i].type);
-			printf("Connections: %s\n", symtab[i].connections);
-			printf("Size in bits: %i\n", symtab[i].size);
-			printf("Used times: %i\n", symtab[i].count);
-			printf("=======================================\n");
+			used_indexes[total_names] = i;
+			total_names++;
 		}
 	}
+	
+	fprintf(result,"Modules:\n");
+	for(int i = 0; i < total_names; i++)
+	{
+		if(symtab[used_indexes[i]].type == "module")
+		{
+			printnode(&symtab[used_indexes[i]],result);
+			printed_names++;
+		}
+	}
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"Wires:\n");
+	for(int i = 0; i < total_names; i++)
+	{
+		if(symtab[used_indexes[i]].type == "wire")
+		{
+			printnode(&symtab[used_indexes[i]],result);
+			printed_names++;
+		}
+	}
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"Inputs:\n");
+	for(int i = 0; i < total_names; i++)
+	{
+		if(symtab[used_indexes[i]].type == "input")
+		{
+			printnode(&symtab[used_indexes[i]],result);
+			printed_names++;
+		}
+	}
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"Outputs:\n");
+	for(int i = 0; i < total_names; i++)
+	{
+		if(symtab[used_indexes[i]].type == "output")
+		{
+			printnode(&symtab[used_indexes[i]],result);
+			printed_names++;
+		}
+	}
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"Registers:\n");
+	for(int i = 0; i < total_names; i++)
+	{
+		if(symtab[used_indexes[i]].type == "reg")
+		{
+			printnode(&symtab[used_indexes[i]],result);
+			printed_names++;
+		}
+	}
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"Module types:\n");
+	for(int i = 0; i < total_names; i++)
+	{
+		if(symtab[used_indexes[i]].type == "Module type")
+		{
+			printnode(&symtab[used_indexes[i]],result);
+			printed_names++;
+		}
+	}
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"Declarations:\n");
+	for(int i = 0; i < total_names; i++)
+	{
+		if((symtab[used_indexes[i]].type != "Module type") &&
+		   (symtab[used_indexes[i]].type != "reg") &&
+		   (symtab[used_indexes[i]].type != "output") &&
+		   (symtab[used_indexes[i]].type != "input") &&
+		   (symtab[used_indexes[i]].type != "wire") &&
+		   (symtab[used_indexes[i]].type != "module"))
+		{
+			printnode(&symtab[used_indexes[i]],result);
+			printed_names++;
+		}
+	}
+	fprintf(result,"*******************************************************\n");
+	fprintf(result,"*******************************************************\n");
+	printf("Result is written to file \"result.txt\"\n");
+	printf("Total names: %i, printed names: %i\n", total_names, printed_names);
+	fclose(result);
 }
 extern void yyerror(char * s)
 {

@@ -1596,13 +1596,13 @@ yyreturn:
 
 
 void printnode(struct symbol *node, FILE *result)
-{
-	fprintf(result,"=======================================\n");
-	fprintf(result,"Object: %s\n", node->name);
-	fprintf(result,"Type: %s\n", node->type);
-	fprintf(result,"Connections: %s\n", node->connections);
-	fprintf(result,"Size in bits: %i\n", node->size);
-	fprintf(result,"Used times: %i\n", node->count);
+{         
+	fprintf(result,"-------------------------------------------------------------------\n");
+	fprintf(result,"Object:			%s\n", node->name);
+	fprintf(result,"Type:			%s\n", node->type);
+	fprintf(result,"Connections:	%s\n", node->connections);
+	fprintf(result,"Size in bits:	%i\n", node->size);
+	fprintf(result,"Used times:		%i\n", node->count);
 }
 
 void main(int argc, char **argv)
@@ -1631,7 +1631,7 @@ void main(int argc, char **argv)
 		}
 	}
 	
-	fprintf(result,"Modules:\n");
+	fprintf(result,"MODULES:\n");
 	for(int i = 0; i < total_names; i++)
 	{
 		if(symtab[used_indexes[i]].type == "module")
@@ -1639,10 +1639,9 @@ void main(int argc, char **argv)
 			printnode(&symtab[used_indexes[i]],result);
 			printed_names++;
 		}
-	}
-	fprintf(result,"*******************************************************\n");
-	fprintf(result,"*******************************************************\n");
-	fprintf(result,"Wires:\n");
+	}				
+	fprintf(result,"###################################################################\n");
+	fprintf(result,"WIRES:\n");
 	for(int i = 0; i < total_names; i++)
 	{
 		if(symtab[used_indexes[i]].type == "wire")
@@ -1651,9 +1650,8 @@ void main(int argc, char **argv)
 			printed_names++;
 		}
 	}
-	fprintf(result,"*******************************************************\n");
-	fprintf(result,"*******************************************************\n");
-	fprintf(result,"Inputs:\n");
+	fprintf(result,"###################################################################\n");
+	fprintf(result,"INPUTS:\n");
 	for(int i = 0; i < total_names; i++)
 	{
 		if(symtab[used_indexes[i]].type == "input")
@@ -1662,9 +1660,8 @@ void main(int argc, char **argv)
 			printed_names++;
 		}
 	}
-	fprintf(result,"*******************************************************\n");
-	fprintf(result,"*******************************************************\n");
-	fprintf(result,"Outputs:\n");
+	fprintf(result,"###################################################################\n");
+	fprintf(result,"OUTPUTS:\n");
 	for(int i = 0; i < total_names; i++)
 	{
 		if(symtab[used_indexes[i]].type == "output")
@@ -1673,9 +1670,8 @@ void main(int argc, char **argv)
 			printed_names++;
 		}
 	}
-	fprintf(result,"*******************************************************\n");
-	fprintf(result,"*******************************************************\n");
-	fprintf(result,"Registers:\n");
+	fprintf(result,"###################################################################\n");
+	fprintf(result,"REGISTERS:\n");
 	for(int i = 0; i < total_names; i++)
 	{
 		if(symtab[used_indexes[i]].type == "reg")
@@ -1684,9 +1680,8 @@ void main(int argc, char **argv)
 			printed_names++;
 		}
 	}
-	fprintf(result,"*******************************************************\n");
-	fprintf(result,"*******************************************************\n");
-	fprintf(result,"Module types:\n");
+	fprintf(result,"###################################################################\n");
+	fprintf(result,"MODULE TYPES:\n");
 	for(int i = 0; i < total_names; i++)
 	{
 		if(symtab[used_indexes[i]].type == "Module type")
@@ -1695,9 +1690,8 @@ void main(int argc, char **argv)
 			printed_names++;
 		}
 	}
-	fprintf(result,"*******************************************************\n");
-	fprintf(result,"*******************************************************\n");
-	fprintf(result,"Declarations:\n");
+	fprintf(result,"###################################################################\n");
+	fprintf(result,"DECLARATIONS:\n");
 	for(int i = 0; i < total_names; i++)
 	{
 		if((symtab[used_indexes[i]].type != "Module type") &&
@@ -1711,8 +1705,7 @@ void main(int argc, char **argv)
 			printed_names++;
 		}
 	}
-	fprintf(result,"*******************************************************\n");
-	fprintf(result,"*******************************************************\n");
+	fprintf(result,"###################################################################\n");
 	printf("Result is written to file \"result.txt\"\n");
 	printf("Total names: %i, printed names: %i\n", total_names, printed_names);
 	fclose(result);

@@ -7,9 +7,7 @@
 	extern int yylex();
 	extern void yyerror(char *s);
 
-	char tmp1[256];
-	char tmp2[256];
-	char tmp3[256];
+	char tmp[256];
 %}
 
 %union {
@@ -61,11 +59,11 @@ wire_list:	NAME ',' NAME   {$1->type = "wire"; $1->size = 1;
 							 $3->type = "wire"; $3->size = 1;}
 	|		wire_list ',' NAME	{ $3->type = "wire"; $3->size = 1;}
 	;
-conn_list:	'.'NAME '('s_name')'	{sprintf(tmp1, "%s to %s",$2->name,$4); $$ = strdup(tmp1);}
-	|		conn_list ',' '.'NAME '('s_name')' {sprintf(tmp2,"%s, %s to %s", $1, $4->name, $6); $$ = strdup(tmp2);}
+conn_list:	'.'NAME '('s_name')'	{sprintf(tmp, "%s to %s",$2->name,$4); $$ = strdup(tmp);}
+	|		conn_list ',' '.'NAME '('s_name')' {sprintf(tmp,"%s, %s to %s", $1, $4->name, $6); $$ = strdup(tmp);}
 	;
 s_name:		NAME	{$$ = $1->name;}
-	|		NAME '[' SIZE_A ']' {sprintf(tmp3, "%s[%i]",$1->name,$3); $$ = strdup(tmp3);}
+	|		NAME '[' SIZE_A ']' {sprintf(tmp, "%s[%i]",$1->name,$3); $$ = strdup(tmp);}
 	;
 range:			{ $$ = 1;}
 	|			'[' SIZE_A ':' SIZE_A ']'	{

@@ -13,7 +13,7 @@
 "wire"			{ return WIRE;}
 "reg"			{ return REG;}
 
-[A-Za-z][\_A-Za-z0-9]*	{
+[\_A-Za-z][\_A-Za-z0-9]*	{
 							struct symbol *sp = lookup(yytext);
 							yylval.symp = sp;
 							return NAME;

@@ -32,6 +32,7 @@ struct symbol *lookup(char *sym)
 			sp->name = strdup(sym);
 			sp->type = "pin";
 			sp->connections = "none";
+			sp->host_module = "none";
 			sp->size = 1;
 			sp->count = 1;
 			return sp;

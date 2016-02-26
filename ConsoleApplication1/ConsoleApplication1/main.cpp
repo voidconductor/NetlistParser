@@ -13,6 +13,7 @@ void printnode(struct symbol *node, FILE *result)
 	fprintf(result, "Type:			%s\n", node->type);
 	fprintf(result, "Connections:	%s\n", node->connections);
 	fprintf(result, "Size in bits:	%i\n", node->size);
+	fprintf(result, "Host module:	%s\n", node->host_module);
 	fprintf(result, "Used times:		%i\n", node->count);
 }
 
@@ -143,4 +144,8 @@ void main(int argc, char **argv)
 	printf("Result is written to file \"result.txt\"\n");
 	printf("Total names: %i, printed names: %i\n", total_names, printed_names);
 	fclose(result);
+
+	cout << endl << "Press any key to finish..." << endl;
+	getchar();
+	getchar();
 }

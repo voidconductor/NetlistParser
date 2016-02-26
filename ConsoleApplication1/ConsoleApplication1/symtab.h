@@ -1,6 +1,7 @@
 #pragma once
 struct symbol {
 	char *name;
+	char *host_module;
 	char *type;
 	char *connections;
 	int size;

@@ -10,7 +10,8 @@ void printnode(struct symbol *node, FILE *result)
 {
 	fprintf(result, "-------------------------------------------------------------------\n");
 	fprintf(result, "Object:			%s\n", node->name);
-	fprintf(result, "Type:			%s\n", node->type);
+	fprintf(result, "Type:			%d\n", node->type);
+	fprintf(result, "Element type:	%s\n", node->el_type);
 	fprintf(result, "Connections:	%s\n", node->connections);
 	fprintf(result, "Size in bits:	%i\n", node->size);
 	fprintf(result, "Host module:	%s\n", node->host_module);
@@ -59,7 +60,7 @@ void main(int argc, char **argv)
 	}
 	for (int i = 0; i < NHASH; i++)
 	{
-		if ((symtab[i].name != NULL) && (symtab[i].type != "pin"))
+		if ((symtab[i].name != NULL) && (symtab[i].type != def_type))
 		{
 			used_indexes[total_names] = i;
 			total_names++;
@@ -69,7 +70,7 @@ void main(int argc, char **argv)
 	fprintf(result, "MODULES:\n");
 	for (int i = 0; i < total_names; i++)
 	{
-		if (symtab[used_indexes[i]].type == "module")
+		if (symtab[used_indexes[i]].type == module)
 		{
 			printnode(&symtab[used_indexes[i]], result);
 			printed_names++;
@@ -79,7 +80,7 @@ void main(int argc, char **argv)
 	fprintf(result, "WIRES:\n");
 	for (int i = 0; i < total_names; i++)
 	{
-		if (symtab[used_indexes[i]].type == "wire")
+		if (symtab[used_indexes[i]].type == wire)
 		{
 			printnode(&symtab[used_indexes[i]], result);
 			printed_names++;
@@ -89,7 +90,7 @@ void main(int argc, char **argv)
 	fprintf(result, "INPUTS:\n");
 	for (int i = 0; i < total_names; i++)
 	{
-		if (symtab[used_indexes[i]].type == "input")
+		if (symtab[used_indexes[i]].type == input)
 		{
 			printnode(&symtab[used_indexes[i]], result);
 			printed_names++;
@@ -99,7 +100,7 @@ void main(int argc, char **argv)
 	fprintf(result, "OUTPUTS:\n");
 	for (int i = 0; i < total_names; i++)
 	{
-		if (symtab[used_indexes[i]].type == "output")
+		if (symtab[used_indexes[i]].type == output)
 		{
 			printnode(&symtab[used_indexes[i]], result);
 			printed_names++;
@@ -109,7 +110,7 @@ void main(int argc, char **argv)
 	fprintf(result, "REGISTERS:\n");
 	for (int i = 0; i < total_names; i++)
 	{
-		if (symtab[used_indexes[i]].type == "reg")
+		if (symtab[used_indexes[i]].type == reg)
 		{
 			printnode(&symtab[used_indexes[i]], result);
 			printed_names++;
@@ -119,7 +120,7 @@ void main(int argc, char **argv)
 	fprintf(result, "MODULE TYPES:\n");
 	for (int i = 0; i < total_names; i++)
 	{
-		if (symtab[used_indexes[i]].type == "Module type")
+		if (symtab[used_indexes[i]].type == mod_type)
 		{
 			printnode(&symtab[used_indexes[i]], result);
 			printed_names++;
@@ -129,12 +130,12 @@ void main(int argc, char **argv)
 	fprintf(result, "DECLARATIONS:\n");
 	for (int i = 0; i < total_names; i++)
 	{
-		if ((symtab[used_indexes[i]].type != "Module type") &&
-			(symtab[used_indexes[i]].type != "reg") &&
-			(symtab[used_indexes[i]].type != "output") &&
-			(symtab[used_indexes[i]].type != "input") &&
-			(symtab[used_indexes[i]].type != "wire") &&
-			(symtab[used_indexes[i]].type != "module"))
+		if ((symtab[used_indexes[i]].type != mod_type) &&
+			(symtab[used_indexes[i]].type != reg) &&
+			(symtab[used_indexes[i]].type != output) &&
+			(symtab[used_indexes[i]].type != input) &&
+			(symtab[used_indexes[i]].type != wire) &&
+			(symtab[used_indexes[i]].type != module))
 		{
 			printnode(&symtab[used_indexes[i]], result);
 			printed_names++;

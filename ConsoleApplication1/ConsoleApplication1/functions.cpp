@@ -30,7 +30,8 @@ struct symbol *lookup(char *sym)
 		if (!sp->name)
 		{
 			sp->name = strdup(sym);
-			sp->type = "pin";
+			sp->type = def_type;
+			sp->el_type = "none";
 			sp->connections = "none";
 			sp->host_module = "none";
 			sp->size = 1;

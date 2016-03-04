@@ -1257,7 +1257,7 @@ yyreduce:
         case 6:
 #line 45 "bison.y" /* yacc.c:1646  */
     {
-														(yyvsp[0].symp)->type = "module"; 
+														(yyvsp[0].symp)->type = module; 
 														sprintf(curr_module,"%s",(yyvsp[0].symp)->name);
 													}
 #line 1264 "bison.cpp" /* yacc.c:1646  */
@@ -1271,14 +1271,14 @@ yyreduce:
 
   case 13:
 #line 62 "bison.y" /* yacc.c:1646  */
-    {(yyvsp[-2].symp)->type = "wire"; (yyvsp[-2].symp)->size = 1; (yyvsp[-2].symp)->host_module = curr_module;
-							 (yyvsp[0].symp)->type = "wire"; (yyvsp[0].symp)->size = 1; (yyvsp[0].symp)->host_module = curr_module;}
+    {(yyvsp[-2].symp)->type = wire; (yyvsp[-2].symp)->size = 1; (yyvsp[-2].symp)->host_module = curr_module;
+							 (yyvsp[0].symp)->type = wire; (yyvsp[0].symp)->size = 1; (yyvsp[0].symp)->host_module = curr_module;}
 #line 1277 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
 #line 64 "bison.y" /* yacc.c:1646  */
-    { (yyvsp[0].symp)->type = "wire"; (yyvsp[0].symp)->size = 1; (yyvsp[0].symp)->host_module = curr_module;}
+    { (yyvsp[0].symp)->type = wire; (yyvsp[0].symp)->size = 1; (yyvsp[0].symp)->host_module = curr_module;}
 #line 1283 "bison.cpp" /* yacc.c:1646  */
     break;
 
@@ -1325,44 +1325,45 @@ yyreduce:
 
   case 21:
 #line 80 "bison.y" /* yacc.c:1646  */
-    { (yyvsp[-1].symp)->type = "input"; (yyvsp[-1].symp)->size = (yyvsp[-2].size_arr); (yyvsp[-1].symp)->host_module = curr_module;}
+    { (yyvsp[-1].symp)->type = input; (yyvsp[-1].symp)->size = (yyvsp[-2].size_arr); (yyvsp[-1].symp)->host_module = curr_module;}
 #line 1330 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
 #line 81 "bison.y" /* yacc.c:1646  */
-    { (yyvsp[-1].symp)->type = "output"; (yyvsp[-1].symp)->size = (yyvsp[-2].size_arr); (yyvsp[-1].symp)->host_module = curr_module;}
+    { (yyvsp[-1].symp)->type = output; (yyvsp[-1].symp)->size = (yyvsp[-2].size_arr); (yyvsp[-1].symp)->host_module = curr_module;}
 #line 1336 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
 #line 83 "bison.y" /* yacc.c:1646  */
-    {(yyvsp[-1].symp)->type = "wire"; (yyvsp[-1].symp)->size = (yyvsp[-2].size_arr); (yyvsp[-1].symp)->host_module = curr_module;}
+    {(yyvsp[-1].symp)->type = wire; (yyvsp[-1].symp)->size = (yyvsp[-2].size_arr); (yyvsp[-1].symp)->host_module = curr_module;}
 #line 1342 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
 #line 84 "bison.y" /* yacc.c:1646  */
-    { (yyvsp[-1].symp)->type = "reg"; (yyvsp[-1].symp)->size = (yyvsp[-2].size_arr); (yyvsp[-1].symp)->host_module = curr_module;}
+    { (yyvsp[-1].symp)->type = reg; (yyvsp[-1].symp)->size = (yyvsp[-2].size_arr); (yyvsp[-1].symp)->host_module = curr_module;}
 #line 1348 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 26:
 #line 85 "bison.y" /* yacc.c:1646  */
     {
-										(yyvsp[-3].symp)->type = "Module type";
+										(yyvsp[-3].symp)->type = mod_type;
 										(yyvsp[-3].symp)->size = 0;
 
-										(yyvsp[-2].symp)->type = (yyvsp[-3].symp)->name;
+										(yyvsp[-2].symp)->type = element;
+										(yyvsp[-2].symp)->el_type = (yyvsp[-3].symp)->name;
 										(yyvsp[-2].symp)->size = 0;
 										(yyvsp[-2].symp)->connections = (yyvsp[-1].arguments);
 										(yyvsp[-2].symp)->host_module = curr_module;
 									}
-#line 1362 "bison.cpp" /* yacc.c:1646  */
+#line 1363 "bison.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1366 "bison.cpp" /* yacc.c:1646  */
+#line 1367 "bison.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1590,7 +1591,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 95 "bison.y" /* yacc.c:1906  */
+#line 96 "bison.y" /* yacc.c:1906  */
 
 
 extern void yyerror(char * s)

@@ -1,8 +1,12 @@
 #pragma once
+
+enum nodetype {wire, reg, module, input, output, element, mod_type, def_type};
+
 struct symbol {
 	char *name;
 	char *host_module;
-	char *type;
+	nodetype type; //Тип узла
+	char *el_type; //Имя типа элемента из библиотеки
 	char *connections;
 	int size;
 	int count;

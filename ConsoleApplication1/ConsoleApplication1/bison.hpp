@@ -61,7 +61,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 14 "bison.y" /* yacc.c:1909  */
+#line 13 "bison.y" /* yacc.c:1909  */
 
 	struct symbol *symp;
 	int size_arr;

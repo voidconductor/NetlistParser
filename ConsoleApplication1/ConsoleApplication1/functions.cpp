@@ -4,7 +4,7 @@
 #include "symtab.h"
 
 struct symbol symtab[NHASH];
-
+//Считает хэш имени
 static unsigned symhash(char *sym)
 {
 	unsigned int hash = 0;
@@ -14,9 +14,10 @@ static unsigned symhash(char *sym)
 
 	return hash;
 }
-
+//Фнкция поиска по имени
 struct symbol *lookup(char *sym)
 {
+	//Вот тут вывзываем хэш-функцию
 	struct symbol *sp = &symtab[symhash(sym) % NHASH];
 	int scount = NHASH;
 
@@ -27,6 +28,7 @@ struct symbol *lookup(char *sym)
 			sp->count++;
 			return sp;
 		}
+		//Если записи об элементе с таким именем не существует, задатся дефолтные параметры
 		if (!sp->name)
 		{
 			sp->name = strdup(sym);
@@ -41,7 +43,7 @@ struct symbol *lookup(char *sym)
 
 		if (++sp >= symtab + NHASH) sp = symtab;
 	}
-
+	//Проверка заполненности таблицы
 	fputs("symbol tbale overflow\n", stderr);
 	abort();
 }

@@ -61,13 +61,14 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 13 "bison.y" /* yacc.c:1909  */
+#line 11 "bison.y" /* yacc.c:1909  */
 
 	struct symbol *symp;
 	int size_arr;
-	char * arguments;
+	class connections * conn;
+	struct tmp_conn * conn_tmp;
 
-#line 71 "bison.hpp" /* yacc.c:1909  */
+#line 72 "bison.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

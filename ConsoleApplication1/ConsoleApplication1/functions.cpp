@@ -28,13 +28,12 @@ struct symbol *lookup(char *sym)
 			sp->count++;
 			return sp;
 		}
-		//Если записи об элементе с таким именем не существует, задатся дефолтные параметры
+		//Если записи об элементе с таким именем не существует, задаются дефолтные параметры
 		if (!sp->name)
 		{
 			sp->name = strdup(sym);
 			sp->type = def_type;
 			sp->el_type = "none";
-			sp->connections = "none";
 			sp->host_module = "none";
 			sp->size = 1;
 			sp->count = 1;

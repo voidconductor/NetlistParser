@@ -12,7 +12,18 @@ void printnode(struct symbol *node, FILE *result)
 	fprintf(result, "Object:			%s\n", node->name);
 	fprintf(result, "Type:			%d\n", node->type);
 	fprintf(result, "Element type:	%s\n", node->el_type);
-	fprintf(result, "Connections:	%s\n", node->connections);
+	if (node->c_list != NULL)
+	{
+		fprintf(result, "Connections:\n");
+		for (int i = 0; i < (node->c_list->conn_list.size()); i++)
+		{
+			fprintf(result, "                .%s to %s",node->c_list->pins[i] ,node->c_list->conn_list[i]->name);
+			if (node->c_list->subw_ind[i] >= 0)
+				fprintf(result, "[%i]\n", node->c_list->subw_ind[i]);
+			else
+				fprintf(result, "\n");
+		}
+	}
 	fprintf(result, "Size in bits:	%i\n", node->size);
 	fprintf(result, "Host module:	%s\n", node->host_module);
 	fprintf(result, "Used times:		%i\n", node->count);

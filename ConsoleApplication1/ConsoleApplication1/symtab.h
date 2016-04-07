@@ -6,15 +6,33 @@ using namespace std;
 enum nodetype {wire, reg, module, input, output, element, mod_type, def_type};
 //Структура данных
 struct symbol {
-	vector<vector<symbol> > kek;
-	char *name;
-	char *host_module; //Модуль, в который входит элемент
-	nodetype type; //Тип узла
-	char *el_type; //Имя типа элемента из библиотеки
-	char *connections;
-	int size;
-	int count;
+	class connections *c_list;		//Связи элемента
+	char *name;						//Имя элемента
+	char *host_module;				//Модуль, в который входит элемент
+	nodetype type;					//Тип узла
+	char *el_type;					//Имя типа элемента из библиотеки
+	int size;						//Размер в битах (для проводов)
+	int count;						//Количество использований
 };
+
+struct tmp_conn {					//Временная служебная структура
+	struct symbol * sym;
+	int index;
+};
+
+class connections {					//Описание связей элемента
+	public:
+		vector<struct symbol*> conn_list;	//Указатели на подключенные элементы
+		vector<char*> pins;					//Входы и выходы элемента
+		vector<int> subw_ind;				//номер линии, если есть
+		void add(struct symbol * conn, char *pin, int ind)
+		{
+			conn_list.push_back(conn);
+			pins.push_back(pin);
+			subw_ind.push_back(ind);
+		}
+};
+
 //Общее количество элементов в таблице символов, число должно быть простым (?), иначе хэш будет плохо считаться.
 #define NHASH 9997
 //Таблица симоволов

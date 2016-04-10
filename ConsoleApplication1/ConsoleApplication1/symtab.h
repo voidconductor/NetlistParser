@@ -39,3 +39,5 @@ class connections {					//Описание связей элемента
 extern struct symbol symtab[NHASH];
 //Функция поиска в таблице по имени ( использует хэш-функцию)
 struct symbol *lookup(char *);
+//Функция, обеспечивающая полную связность элементов.
+void rewire(struct symbol *);

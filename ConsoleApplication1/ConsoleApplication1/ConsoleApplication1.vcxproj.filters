@@ -47,4 +47,9 @@
       <Filter>lex_bison</Filter>
     </CustomBuild>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Задачи.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

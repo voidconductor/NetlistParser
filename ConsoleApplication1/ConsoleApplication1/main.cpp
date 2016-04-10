@@ -17,11 +17,22 @@ void printnode(struct symbol *node, FILE *result)
 		fprintf(result, "Connections:\n");
 		for (int i = 0; i < (node->c_list->conn_list.size()); i++)
 		{
-			fprintf(result, "                .%s to %s",node->c_list->pins[i] ,node->c_list->conn_list[i]->name);
-			if (node->c_list->subw_ind[i] >= 0)
-				fprintf(result, "[%i]\n", node->c_list->subw_ind[i]);
+			if (node->type == element)
+			{
+				fprintf(result, "                .%s to %s", node->c_list->pins[i], node->c_list->conn_list[i]->name);
+				if (node->c_list->subw_ind[i] >= 0)
+					fprintf(result, "[%i]\n", node->c_list->subw_ind[i]);
+				else
+					fprintf(result, "\n");
+			}
 			else
-				fprintf(result, "\n");
+			{
+				if (node->c_list->subw_ind[i] >= 0)
+					fprintf(result, "                [%i] ", node->c_list->subw_ind[i]);
+				else
+					fprintf(result,"                ");
+				fprintf(result, "to (.%s) of (%s)\n", node->c_list->pins[i], node->c_list->conn_list[i]->name);
+			}
 		}
 	}
 	fprintf(result, "Size in bits:	%i\n", node->size);

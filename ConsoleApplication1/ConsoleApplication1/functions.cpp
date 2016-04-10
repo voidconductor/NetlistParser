@@ -46,3 +46,22 @@ struct symbol *lookup(char *sym)
 	fputs("symbol tbale overflow\n", stderr);
 	abort();
 }
+
+void rewire(struct symbol * node)
+{
+	if (node->c_list == NULL)
+	{
+		//Если элемент не имеет связей, то и восстанавливать нечего.
+		return;
+	}
+	for (int i = 0; i < node->c_list->conn_list.size(); i++)
+	{
+		struct symbol *tmp = node->c_list->conn_list[i];
+		if(tmp->c_list == NULL)
+			tmp->c_list = new connections;
+		if (node->c_list->subw_ind[i] >= 0)
+			tmp->c_list->add(node, node->c_list->pins[i], node->c_list->subw_ind[i]);
+		else
+			tmp->c_list->add(node, node->c_list->pins[i], -1);
+	}
+}

@@ -37,6 +37,7 @@ struct symbol *lookup(char *sym)
 			sp->host_module = "none";
 			sp->size = 1;
 			sp->count = 1;
+			sp->first_used = 0;
 			return sp;
 		}
 

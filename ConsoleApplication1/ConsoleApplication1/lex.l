@@ -33,14 +33,17 @@
 "reg"						{ return REG;}
 
 [\_A-Za-z][\_A-Za-z0-9]*	{
-							struct symbol *sp = lookup(yytext);
-							if (yylineno >= mod_begin && yylineno <= mod_end)
-							{
-								sp->host_module = strdup(curr_module);
-							}
-								
-							yylval.symp = sp;
-							return NAME;
+								struct symbol *sp = lookup(yytext);
+								if (yylineno >= mod_begin && yylineno <= mod_end)
+								{
+									sp->host_module = strdup(curr_module);
+								}
+								if(sp->first_used == 0)
+								{
+									sp->first_used = yylineno;
+								}
+								yylval.symp = sp;
+								return NAME;
 							}
 [0-9]+						{
 								yylval.size_arr = atoi(yytext);

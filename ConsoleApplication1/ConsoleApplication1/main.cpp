@@ -38,6 +38,7 @@ void printnode(struct symbol *node, FILE *result)
 	fprintf(result, "Size in bits:	%i\n", node->size);
 	fprintf(result, "Host module:	%s\n", node->host_module);
 	fprintf(result, "Used times:		%i\n", node->count);
+	fprintf(result, "First used:     line #%i\n", node->first_used);
 }
 
 void main(int argc, char **argv)

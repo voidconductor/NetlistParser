@@ -2,13 +2,10 @@
 %option yylineno
 
 %{
-	
 	#include "bison.hpp"
 	#include "symtab.h"
 	#include <string.h>
-	#include <iostream> //Для отладки
 	#include <stdlib.h>
-	#include <malloc.h>
 
 	char curr_module[80];
 	int mod_begin;

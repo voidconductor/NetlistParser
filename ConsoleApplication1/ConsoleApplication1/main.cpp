@@ -1,5 +1,7 @@
 #include "bison.hpp"
+#include "lib_parse.hpp"
 #include "symtab.h"
+
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
@@ -44,6 +46,7 @@ void printnode(struct symbol *node, FILE *result)
 void main(int argc, char **argv)
 {
 	extern FILE * yyin;
+	extern FILE * libin;
 	FILE *result;
 	char *mode = "w";
 
@@ -74,6 +77,33 @@ void main(int argc, char **argv)
 	}
 
 	yyparse();
+
+	
+	if (argv[1] == NULL)
+	{
+		char tmp[256];
+		cout << "Input library name" << endl;
+		cin >> tmp;
+		libin = fopen(tmp, "r+");
+		if (libin == NULL)
+		{
+			cout << "Cannot open library file" << endl;
+			exit(1);
+		}
+	}
+	else
+	{
+		libin = fopen(argv[2], "r+");
+		if (libin == NULL)
+		{
+			cout << "Cannot open library file" << endl;
+			exit(1);
+		}
+	}
+	libparse();
+	
+
+	cout << "Number of libriry items " << lib_cnt << endl;
 
 	result = fopen("result.txt", mode);
 	if (result == NULL)

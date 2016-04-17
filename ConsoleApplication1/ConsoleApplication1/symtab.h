@@ -34,11 +34,25 @@ class connections {					//Описание связей элемента
 		}
 };
 
+struct lib_ent {
+	char *name;
+	int pin_number;
+	char * pin_name[10];
+};
+
+
+
 //Общее количество элементов в таблице символов, число должно быть простым (?), иначе хэш будет плохо считаться.
 #define NHASH 9997
 //Таблица симоволов
 extern struct symbol symtab[NHASH];
+//Библиотека
+extern struct lib_ent fpga_lib[NHASH];
 //Функция поиска в таблице по имени ( использует хэш-функцию)
 struct symbol *lookup(char *);
 //Функция, обеспечивающая полную связность элементов.
 void rewire(struct symbol *);
+//Функция поиска по библиотеке
+struct lib_ent *lib_search(char *);
+//Счетчик количества символов в библиотеке
+extern int lib_cnt;

@@ -4,6 +4,9 @@
 #include "symtab.h"
 
 struct symbol symtab[NHASH];
+
+struct lib_ent fpga_lib[NHASH];
+
 //Считает хэш имени
 static unsigned symhash(char *sym)
 {
@@ -47,7 +50,33 @@ struct symbol *lookup(char *sym)
 	fputs("symbol tbale overflow\n", stderr);
 	abort();
 }
+//Функция поиска по библиотеке
+struct lib_ent *lib_search(char *sym)
+{
+	//Вот тут вывзываем хэш-функцию
+	struct lib_ent *sp = &fpga_lib[symhash(sym) % NHASH];
+	int scount = NHASH;
 
+	while (--scount >= 0)
+	{
+		if (sp->name && !strcmp(sp->name, sym))
+		{
+			return sp;
+		}
+		//Если записи об элементе с таким именем не существует, задаются дефолтные параметры
+		if (!sp->name)
+		{
+			sp->name = strdup(sym);
+			return sp;
+		}
+
+		if (++sp >= fpga_lib + NHASH) sp = fpga_lib;
+	}
+	//Проверка заполненности таблицы
+	fputs("symbol tbale overflow\n", stderr);
+	abort();
+}
+//Функция, обеспечивающая полную связность элементов.
 void rewire(struct symbol * node)
 {
 	if (node->c_list == NULL)

@@ -509,18 +509,15 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "lex.l"
 #line 5 "lex.l"
-	
 	#include "bison.hpp"
 	#include "symtab.h"
 	#include <string.h>
-	#include <iostream> //Для отладки
 	#include <stdlib.h>
-	#include <malloc.h>
 
 	char curr_module[80];
 	int mod_begin;
 	int mod_end=9999;
-#line 524 "lex.cpp"
+#line 521 "lex.cpp"
 
 #define INITIAL 0
 
@@ -729,9 +726,9 @@ YY_DECL
 		}
 
 	{
-#line 18 "lex.l"
+#line 15 "lex.l"
 
-#line 735 "lex.cpp"
+#line 732 "lex.cpp"
 
 	while ( 1 )		/* loops until end-of-file is reached */
 		{
@@ -800,7 +797,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 19 "lex.l"
+#line 16 "lex.l"
 { 
 								mod_begin = yylineno;
 								char *tmp = strdup(yytext);
@@ -814,32 +811,32 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 29 "lex.l"
+#line 26 "lex.l"
 { return ENDMODULE; mod_end = yylineno;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 30 "lex.l"
+#line 27 "lex.l"
 { return INPUT;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 31 "lex.l"
+#line 28 "lex.l"
 { return OUTPUT;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 32 "lex.l"
+#line 29 "lex.l"
 { return WIRE;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 33 "lex.l"
+#line 30 "lex.l"
 { return REG;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 35 "lex.l"
+#line 32 "lex.l"
 {
 								struct symbol *sp = lookup(yytext);
 								if (yylineno >= mod_begin && yylineno <= mod_end)
@@ -856,7 +853,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 48 "lex.l"
+#line 45 "lex.l"
 {
 								yylval.size_arr = atoi(yytext);
 								return SIZE_A;
@@ -865,27 +862,27 @@ YY_RULE_SETUP
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 52 "lex.l"
+#line 49 "lex.l"
 {}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 53 "lex.l"
+#line 50 "lex.l"
 {}
 	YY_BREAK
 case 11:
-#line 55 "lex.l"
+#line 52 "lex.l"
 case 12:
 YY_RULE_SETUP
-#line 55 "lex.l"
+#line 52 "lex.l"
 return yytext[0];
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 56 "lex.l"
+#line 53 "lex.l"
 ECHO;
 	YY_BREAK
-#line 889 "lex.cpp"
+#line 886 "lex.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1892,6 +1889,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 56 "lex.l"
+#line 53 "lex.l"
 
 

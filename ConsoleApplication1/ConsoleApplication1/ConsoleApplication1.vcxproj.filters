@@ -16,19 +16,28 @@
     <Filter Include="lex_bison">
       <UniqueIdentifier>{5e59481d-1377-4b03-b98e-e460b091e144}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы исходного кода\Парсеры">
+      <UniqueIdentifier>{85650957-5ef0-4c73-98b0-ff74d4c1784b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="lex.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="bison.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
     <ClCompile Include="functions.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="bison.cpp">
+      <Filter>Файлы исходного кода\Парсеры</Filter>
+    </ClCompile>
+    <ClCompile Include="lex.cpp">
+      <Filter>Файлы исходного кода\Парсеры</Filter>
+    </ClCompile>
+    <ClCompile Include="lib_lex.cpp">
+      <Filter>Файлы исходного кода\Парсеры</Filter>
+    </ClCompile>
+    <ClCompile Include="lib_parse.cpp">
+      <Filter>Файлы исходного кода\Парсеры</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -38,12 +47,21 @@
     <ClInclude Include="symtab.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="lib_parse.hpp">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="lex.l">
       <Filter>lex_bison</Filter>
     </CustomBuild>
     <CustomBuild Include="bison.y">
+      <Filter>lex_bison</Filter>
+    </CustomBuild>
+    <CustomBuild Include="lib_lex.l">
+      <Filter>lex_bison</Filter>
+    </CustomBuild>
+    <CustomBuild Include="lib_parse.y">
       <Filter>lex_bison</Filter>
     </CustomBuild>
   </ItemGroup>

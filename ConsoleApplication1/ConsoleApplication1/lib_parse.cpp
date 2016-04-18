@@ -76,6 +76,7 @@
 	#include <stdio.h>
 	#include <string.h>
 	#include <stdlib.h>
+	#include <iostream>
 	#include "symtab.h"
 
 	extern int liblex();
@@ -83,7 +84,7 @@
 
 	int lib_cnt = 0;
 
-#line 87 "lib_parse.cpp" /* yacc.c:339  */
+#line 88 "lib_parse.cpp" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -138,12 +139,13 @@ extern int libdebug;
 
 union LIBSTYPE
 {
-#line 15 "lib_parse.y" /* yacc.c:355  */
+#line 16 "lib_parse.y" /* yacc.c:355  */
 
 	struct lib_ent *symp;
 	char * pins;
+	char ** pin_list;
 
-#line 147 "lib_parse.cpp" /* yacc.c:355  */
+#line 149 "lib_parse.cpp" /* yacc.c:355  */
 };
 
 typedef union LIBSTYPE LIBSTYPE;
@@ -160,7 +162,7 @@ int libparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 164 "lib_parse.cpp" /* yacc.c:358  */
+#line 166 "lib_parse.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -458,7 +460,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    28,    28,    29,    30,    33,    35,    38,    39
+       0,    32,    32,    33,    34,    37,    39,    42,    48
 };
 #endif
 
@@ -1227,19 +1229,58 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 29 "lib_parse.y" /* yacc.c:1646  */
+#line 33 "lib_parse.y" /* yacc.c:1646  */
     {lib_cnt++;}
-#line 1233 "lib_parse.cpp" /* yacc.c:1646  */
+#line 1235 "lib_parse.cpp" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 30 "lib_parse.y" /* yacc.c:1646  */
+#line 34 "lib_parse.y" /* yacc.c:1646  */
     {lib_cnt++;}
-#line 1239 "lib_parse.cpp" /* yacc.c:1646  */
+#line 1241 "lib_parse.cpp" /* yacc.c:1646  */
+    break;
+
+  case 5:
+#line 37 "lib_parse.y" /* yacc.c:1646  */
+    {(yyvsp[-1].symp)->pin_list = (yyvsp[0].pin_list);}
+#line 1247 "lib_parse.cpp" /* yacc.c:1646  */
+    break;
+
+  case 6:
+#line 39 "lib_parse.y" /* yacc.c:1646  */
+    {(yyvsp[-1].symp)->pin_list = (yyvsp[0].pin_list);}
+#line 1253 "lib_parse.cpp" /* yacc.c:1646  */
+    break;
+
+  case 7:
+#line 43 "lib_parse.y" /* yacc.c:1646  */
+    { 
+				char ** tmp = new char *[100]();
+				tmp[0] = (yyvsp[0].pins);
+				(yyval.pin_list) = tmp;
+			}
+#line 1263 "lib_parse.cpp" /* yacc.c:1646  */
+    break;
+
+  case 8:
+#line 49 "lib_parse.y" /* yacc.c:1646  */
+    { 
+				char ** tmp = (yyvsp[-1].pin_list);
+				for(int i = 0; i<100;i++)
+				{
+					if(tmp[i] == NULL)
+					{
+						tmp[i] = (yyvsp[0].pins);
+						break;
+					}
+				}
+				(yyval.pin_list) = tmp;
+			}
+#line 1280 "lib_parse.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1243 "lib_parse.cpp" /* yacc.c:1646  */
+#line 1284 "lib_parse.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1467,7 +1508,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 42 "lib_parse.y" /* yacc.c:1906  */
+#line 63 "lib_parse.y" /* yacc.c:1906  */
 
 
 extern void liberror(char * s)

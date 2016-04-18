@@ -36,8 +36,7 @@ class connections {					//Описание связей элемента
 
 struct lib_ent {
 	char *name;
-	int pin_number;
-	char * pin_name[10];
+	char ** pin_list; //Выделяйте 100 на всякий случай, бывает очень много пинов.
 };
 
 

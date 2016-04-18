@@ -76,10 +76,8 @@ void main(int argc, char **argv)
 		}
 	}
 
-	yyparse();
-
-	
-	if (argv[1] == NULL)
+	yyparse();// Парсер нетлиста
+	if ((argv[1] && argv[2]) == NULL)
 	{
 		char tmp[256];
 		cout << "Input library name" << endl;
@@ -100,11 +98,35 @@ void main(int argc, char **argv)
 			exit(1);
 		}
 	}
-	libparse();
-	
-
+	libparse();//Парсер библиотеки
+	//====================================================================
+	//ОТЛАДКА БИБЛИОТЕКИ
 	cout << "Number of libriry items " << lib_cnt << endl;
 
+	
+	for (int i = 0; i < NHASH; i++)
+	{
+		if (fpga_lib[i].name != NULL)
+		{
+			cout << fpga_lib[i].name << " (";
+			
+			for (int j = 0; j < 100; j++)
+			{
+				if (fpga_lib[i].pin_list[j] == NULL)
+					break;
+				else
+					cout << fpga_lib[i].pin_list[j] << " ";
+			}
+			
+			cout << ")" << endl << endl;
+		}
+	}
+
+	//===============================================================
+	//ОТЛАДКА БИБЛИОТЕКИ
+
+	//ОТЛАДКА НЕТЛИСТА
+	//===============================================================
 	result = fopen("result.txt", mode);
 	if (result == NULL)
 	{

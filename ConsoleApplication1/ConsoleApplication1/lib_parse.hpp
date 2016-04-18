@@ -65,12 +65,13 @@ extern int libdebug;
 
 union LIBSTYPE
 {
-#line 15 "lib_parse.y" /* yacc.c:1909  */
+#line 16 "lib_parse.y" /* yacc.c:1909  */
 
 	struct lib_ent *symp;
 	char * pins;
+	char ** pin_list;
 
-#line 74 "lib_parse.hpp" /* yacc.c:1909  */
+#line 75 "lib_parse.hpp" /* yacc.c:1909  */
 };
 
 typedef union LIBSTYPE LIBSTYPE;

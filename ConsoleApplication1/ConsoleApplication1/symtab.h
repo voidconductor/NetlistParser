@@ -55,3 +55,5 @@ void rewire(struct symbol *);
 struct lib_ent *lib_search(char *);
 //Счетчик количества символов в библиотеке
 extern int lib_cnt;
+//Функция сверки нетлиста и библиотеки
+int lib_check();

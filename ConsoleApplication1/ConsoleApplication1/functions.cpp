@@ -95,3 +95,58 @@ void rewire(struct symbol * node)
 			tmp->c_list->add(node, node->c_list->pins[i], -1);
 	}
 }
+//Функция сверки нетлиста и библиотеки
+int lib_check()
+{
+	int used_lib[NHASH];
+	int used_netlist[NHASH];
+
+	int net_names = 0;
+	int lib_names = 0;
+
+	bool flag; 
+	bool flag_total = false;
+
+	for (int i = 0; i < NHASH; i++)
+	{
+		if ((symtab[i].name != NULL) && (symtab[i].type == mod_type))
+		{
+			used_netlist[net_names] = i;
+			net_names++;
+		}
+	}
+
+	for (int i = 0; i < NHASH; i++)
+	{
+		if ((fpga_lib[i].name != NULL))
+		{
+			used_lib[lib_names] = i;
+			lib_names++;
+		}
+	}
+
+	for (int i = 0; i < net_names; i++)
+	{
+		for (int j = 0; j < lib_names; j++)
+		{
+			flag = true;
+			char *tmp = symtab[used_netlist[i]].name;
+			char *tmp1 = fpga_lib[used_lib[j]].name;
+			if (strcmp(tmp, tmp1) == 0)
+			{
+				flag = false;
+				break;
+			}
+		}
+		if (flag)
+		{
+			printf("Type %s from this netlist not found in library \n", symtab[used_netlist[i]].name);
+			flag_total = true;
+		}
+	}
+
+	if (flag_total)
+		return 1;
+	else
+		return 0;
+}

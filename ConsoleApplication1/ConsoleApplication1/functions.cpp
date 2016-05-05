@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <vector>
 #include "symtab.h"
 
 struct symbol symtab[NHASH];
@@ -149,4 +150,47 @@ int lib_check()
 		return 1;
 	else
 		return 0;
+}
+
+//Функция поиска элементов
+//Типы поиска - "module"(1) и "other"(2)
+//enum nodetype {wire, reg, module, input, output, element, mod_type, def_type};
+vector<struct symbol*> search(char * name, int type)
+{
+	vector<struct symbol*> found;
+	if (type == 1)
+	{
+		for (int i = 0; i < NHASH; i++)
+		{
+			if (symtab[i].el_type == name)
+			{
+				found.push_back(&symtab[i]);
+			}
+		}
+		return found;
+	}
+	else if (type == 2)
+	{
+		//Дешифрование
+		nodetype search_arg;
+		if (name == "wire")
+			search_arg = wire;
+		else if (name == "module")
+			search_arg = module;
+		else if (name == "imput")
+			search_arg = input;
+		else if (name == "output")
+			search_arg = output;
+		else if (name == "mod_type")
+			search_arg = mod_type;
+		for (int i = 0; i < NHASH; i++)
+		{
+			if (symtab[i].type == search_arg)
+			{
+				found.push_back(&symtab[i]);
+			}
+		}
+		return found;
+	}
+	else return found;
 }

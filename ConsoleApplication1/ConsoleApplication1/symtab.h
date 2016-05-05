@@ -57,3 +57,5 @@ struct lib_ent *lib_search(char *);
 extern int lib_cnt;
 //Функция сверки нетлиста и библиотеки
 int lib_check();
+//Функция поиска элементов принадлежащих типу
+vector<struct symbol*> search(char *, int);

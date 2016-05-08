@@ -14,7 +14,7 @@ struct symbol {
 	class connections *c_list;		//Связи элемента
 	char *name;						//Имя элемента
 	char *host_module;				//Модуль, в который входит элемент
-	nodetype type;					//Тип узла
+	nodetype type = def_type;					//Тип узла
 	char *el_type;					//Имя типа элемента из библиотеки
 	int size;						//Размер в битах (для проводов)
 	int count;						//Количество использований
@@ -63,4 +63,6 @@ extern int lib_cnt;
 //Функция сверки нетлиста и библиотеки
 int lib_check();
 //Функция поиска элементов принадлежащих типу
-vector<struct symbol*> search(char *, int);
+vector<struct symbol*> search(char *);
+//Просто быстрый поиск элемента нетлиста по имени
+struct symbol *name_search(char *);

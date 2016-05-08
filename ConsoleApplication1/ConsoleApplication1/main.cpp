@@ -11,6 +11,7 @@ Designed by Ефимов В.А [3О-411Б]
 #include <iostream>
 #include <stdlib.h>
 #include <ctype.h>
+#include <vector>
 
 extern void yyrestart(FILE *input_file);
 extern void librestart(FILE *input_file);
@@ -28,7 +29,7 @@ int data_wipe()
 	}
 	return 1;
 }
-
+//Сбрасывает библиотеку
 int lib_wipe()
 {
 	for (int i = 0; i < NHASH; i++)
@@ -53,7 +54,7 @@ void main(int argc, char **argv)
 	cout << "Hello" << endl;
 	cout << "***********************************************" << endl;
 
-	if (argv[1] != NULL)
+	if (argv[1] != NULL) //Попытка считать аргументы запуска
 	{
 		yyin = fopen(argv[1], "r+");
 		if (yyin == NULL)
@@ -84,7 +85,7 @@ parse_net_again:	//warning, a wild GOTO appears
 
 
 
-	if ((argv[1] && argv[2]) != NULL)
+	if ((argv[1] && argv[2]) != NULL) //Попытка считать аргументы запуска
 	{
 		libin = fopen(argv[2], "r+");
 		if (libin == NULL)
@@ -143,6 +144,7 @@ parse_lib_again:	//warning, a wild GOTO appears
 	while (1)
 	{
 		char com_inp[20];
+		cout << "*****************************************************************" << endl;
 		cout << endl << "Command list:" << endl;
 		cout << "1. - \"all\" - List all netlist elements." << endl;
 		cout << "2. - \"typelist\" - List all netlist element types." << endl;
@@ -153,31 +155,115 @@ parse_lib_again:	//warning, a wild GOTO appears
 		cout << "7. - \"typerpl\" - Replace all elements of choosen type." << endl;
 		cout << "8. - \"exit\" - Save and Quit" << endl;
 		cin >> com_inp;
-
+		//Нечувствительность к регистру
 		for (int i = 0; i < 20; i++)
 		{
 			com_inp[i] = tolower(com_inp[i]);
 		}
 
-		if (!strcmp(com_inp, "all"))
+		if (!strcmp(com_inp, "all")) //Вывести информацию обо всех элементах
 		{
-			//Вывести информацию обо всех элементах
-			cout << "placeholder" << endl;
+			cout << "Elements of this netlist:" << endl;
+			for (int i = 0; i < NHASH; i++)
+			{
+				if ((symtab[i].name != NULL) && (symtab[i].type != def_type) && (symtab[i].type != mod_type))
+				{
+					cout << symtab[i].name << endl;
+					// Доделать вывод типа элемента и разрядность(?)
+				}
+			}
+			cout << "continue..." << endl;
+			getchar();
+			getchar();
 		}
-		else if (!strcmp(com_inp, "typelist"))
+		else if (!strcmp(com_inp, "typelist")) //Список всех типов элементов
 		{
-			//Список всех типов элементов
-			cout << "placeholder" << endl;
+			vector<symbol *> search_res;
+			search_res = search("mod_type");
+			cout << "Elements types: " << endl;
+			for (int i = 0; i < search_res.size(); i++)
+			{
+				cout << search_res[i]->name << endl;
+			}
+			cout << "continue..." << endl;
+			getchar();
+			getchar();
 		}
-		else if (!strcmp(com_inp, "type"))
+		else if (!strcmp(com_inp, "type"))		//Список элементов типа <type>
 		{
-			//Список элементов типа <type>
-			cout << "placeholder" << endl;
+			char * search_arg = new char[80];
+			vector<symbol *> search_res;
+			cout << "type name: ";
+			cin >> search_arg;
+			search_res = search(search_arg);
+
+			if (search_res.size() == 0)
+			{
+				cout << "No instances found-0x31" << endl;
+			}
+			else
+			{
+				cout << "Elements of this type: " << search_arg << endl;
+				for (int i = 0; i < search_res.size(); i++)
+				{
+					cout << search_res[i]->name << endl;
+				}
+			}
+			delete search_arg;
+			cout << "continue..." << endl;
+			getchar();
+			getchar();
 		}
-		else if (!strcmp(com_inp, "info"))
+		else if (!strcmp(com_inp, "info")) //Вывести подробную информацию об элементе
 		{
-			//Вывести подробную информацию об элементе
-			cout << "placeholder" << endl;
+			char * search_arg = new char[80];
+			struct symbol * tmp_res;
+			cout << "element name: ";
+			cin >> search_arg;
+
+			tmp_res = name_search(search_arg);
+			if (tmp_res == NULL)
+			{
+				cout << "Element not found-0x33" << endl;
+			}
+			else
+			{
+				cout << "-------------------------------------------------------------------" << endl;
+				cout << "Object:         " << tmp_res->name << endl;
+				cout << "Type:           " << tmp_res->type << endl;
+				cout << "Element type:   " << tmp_res->el_type << endl;
+				if (tmp_res->c_list != NULL)
+				{
+					cout << "Connections:" << endl;
+					for (int i = 0; i < (tmp_res->c_list->conn_list.size()); i++)
+					{
+						if (tmp_res->type == element)
+						{
+							cout << "                ." << tmp_res->c_list->pins[i] << " to " << tmp_res->c_list->conn_list[i]->name;
+							if (tmp_res->c_list->subw_ind[i] >= 0)
+								cout << "[" << tmp_res->c_list->subw_ind[i] << "]" << endl;
+							else
+								cout << endl;
+						}
+						else
+						{
+							if (tmp_res->c_list->subw_ind[i] >= 0)
+								cout << "                " << tmp_res->c_list->subw_ind[i] << " ";
+							else
+								cout << "                ";
+							cout << "to (." << tmp_res->c_list->pins[i] << ") of (" << tmp_res->c_list->conn_list[i]->name << ")" << endl;
+						}
+					}
+				}
+				cout << "Size in bits:	" << tmp_res->size << endl;
+				cout << "Host module:	" << tmp_res->host_module << endl;
+				cout << "Used times:		" << tmp_res->count << endl;
+				cout << "First used:     line #" << tmp_res->first_used << endl;
+			}
+			delete search_arg;
+			cout << "continue..." << endl;
+			getchar();
+			getchar();
 		}
 		else if (!strcmp(com_inp, "conn"))
 		{

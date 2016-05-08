@@ -24,6 +24,24 @@ static unsigned symhash(char *sym)
 	return hash;
 }
 //Фнкция поиска по имени
+
+struct symbol *name_search(char * sym)
+{
+	struct symbol *sp = &symtab[symhash(sym) % NHASH];
+	int scount = NHASH;
+
+	while (--scount >= 0)
+	{
+		if (sp->name && !strcmp(sp->name, sym))
+		{
+			sp->count++;
+			return sp;
+		}
+		if (++sp >= symtab + NHASH) sp = symtab;
+	}
+	return 0;
+}
+
 struct symbol *lookup(char *sym)
 {
 	//Вот тут вывзываем хэш-функцию
@@ -41,7 +59,6 @@ struct symbol *lookup(char *sym)
 		if (!sp->name)
 		{
 			sp->name = strdup(sym);
-			sp->type = def_type;
 			sp->el_type = "none";
 			sp->host_module = "none";
 			sp->size = 1;
@@ -160,42 +177,41 @@ int lib_check()
 //Функция поиска элементов
 //Типы поиска - "module"(1) и "other"(2)
 //enum nodetype {wire, reg, module, input, output, element, mod_type, def_type};
-vector<struct symbol*> search(char * name, int type)
+vector<struct symbol*> search(char * name)
 {
 	vector<struct symbol*> found;
-	if (type == 1)
+	//Дешифрование
+	nodetype search_arg; 
+	if (!strcmp(name,"wire"))
+		search_arg = wire;
+	else if (!strcmp(name, "module"))
+		search_arg = module;
+	else if (!strcmp(name, "input"))
+		search_arg = input;
+	else if (!strcmp(name, "output"))
+		search_arg = output;
+	else if (!strcmp(name, "mod_type"))
+		search_arg = mod_type;
+	else
 	{
 		for (int i = 0; i < NHASH; i++)
 		{
-			if (symtab[i].el_type == name)
+			if (symtab[i].el_type != NULL)
 			{
-				found.push_back(&symtab[i]);
+				if (!strcmp(symtab[i].el_type, name))
+				{
+					found.push_back(&symtab[i]);
+				}
 			}
 		}
 		return found;
 	}
-	else if (type == 2)
+	for (int i = 0; i < NHASH; i++)
 	{
-		//Дешифрование
-		nodetype search_arg;
-		if (name == "wire")
-			search_arg = wire;
-		else if (name == "module")
-			search_arg = module;
-		else if (name == "imput")
-			search_arg = input;
-		else if (name == "output")
-			search_arg = output;
-		else if (name == "mod_type")
-			search_arg = mod_type;
-		for (int i = 0; i < NHASH; i++)
+		if (symtab[i].type == search_arg)
 		{
-			if (symtab[i].type == search_arg)
-			{
-				found.push_back(&symtab[i]);
-			}
+			found.push_back(&symtab[i]);
 		}
-		return found;
 	}
-	else return found;
+	return found;
 }

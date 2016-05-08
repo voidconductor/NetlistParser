@@ -1632,4 +1632,5 @@ yyreturn:
 extern void yyerror(char * s)
 {
 	fprintf(stderr, "error: %s\n", s);
+	fprintf(stderr, "Source is not a netlist-0x1\n");
 }

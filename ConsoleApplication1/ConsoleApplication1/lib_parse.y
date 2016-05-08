@@ -65,4 +65,5 @@ pinlist:	PINS
 extern void liberror(char * s)
 {
 	fprintf(stderr, "error: %s\n", s);
+	fprintf(stderr, "Not a valid library-0x02\n");
 }

@@ -7,6 +7,9 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+extern void yyrestart(FILE *input_file);
+extern void librestart(FILE *input_file);
+
 using namespace std;
 
 
@@ -15,57 +18,73 @@ void main(int argc, char **argv)
 	//Входные файлы для парсеров
 	extern FILE * yyin;
 	extern FILE * libin;
+	int parse_res;
 
-
-	if (argv[1] == NULL)
-	{
-		char tmp[256];
-		cout << "Input source name" << endl;
-		cin >> tmp;
-		yyin = fopen(tmp, "r+");
-		if (yyin == NULL)
-		{
-			cout << "Cannot open source file" << endl;
-			exit(1);
-		}
-	}
-	else
+	if (argv[1] != NULL)
 	{
 		yyin = fopen(argv[1], "r+");
 		if (yyin == NULL)
 		{
-			cout << "Cannot open source file" << endl;
-			exit(1);
+			cout << "Cannot open source file!" << endl;
 		}
 	}
-	yyparse();// Парсер нетлиста
-
-	if ((argv[1] && argv[2]) == NULL)
+parse_net_again:	//warning, a wild GOTO appears
+	while (yyin == NULL)
 	{
 		char tmp[256];
-		cout << "Input library name" << endl;
+		cout << "soure path: ";
 		cin >> tmp;
-		libin = fopen(tmp, "r+");
-		if (libin == NULL)
+		yyin = fopen(tmp, "r+");
+		if (yyin == NULL)
 		{
-			cout << "Cannot open library file" << endl;
-			exit(1);
+			cout << "Cannot open source file!" << endl;
 		}
 	}
-	else
+	yyrestart(yyin);	//Здесь происходит смена входного файла, парсер сбрасывает буферы
+	parse_res = yyparse();// Парсер нетлиста
+	if (parse_res != 0)
+	{
+		yyin = NULL;
+		goto parse_net_again;	//HERE IT COMES
+	}
+
+
+
+	if ((argv[1] && argv[2]) != NULL)
 	{
 		libin = fopen(argv[2], "r+");
 		if (libin == NULL)
 		{
-			cout << "Cannot open library file" << endl;
-			exit(1);
+			cout << "Cannot open library file!" << endl;
 		}
 	}
-	libparse();//Парсер библиотеки
+parse_lib_again:	//warning, a wild GOTO appears
+	while (libin == NULL)
+	{
+		char tmp[256];
+		cout << "library path: ";
+		cin >> tmp;
+		libin = fopen(tmp, "r+");
+		if (libin == NULL)
+		{
+			cout << "Cannot open library file!" << endl;
+		}
+	}
+	librestart(libin);	//Здесь происходит смена входного файла, парсер сбрасывает буферы
+	parse_res = libparse();//Парсер библиотеки
+	if (parse_res == 1)
+	{
+		libin = NULL;
+		goto parse_lib_again;	//HERE IT COMES
+	}
+
 
 	//Проверка элементов нетлиста на принадлежность библиотеке
 	if (lib_check())
-		cout << endl << "Netlist contains wrong elements" << endl;
+	{
+		cout << endl << "Incorrect Netlist-0x11" << endl;
+		goto parse_net_again;
+	}
 	else
 		cout << endl << "Netlist elements are correct!" << endl;
 
@@ -91,34 +110,42 @@ void main(int argc, char **argv)
 
 		if (!strcmp(com_inp, "all"))
 		{
+			//Вывести информацию обо всех элементах
 			cout << "placeholder" << endl;
 		}
 		else if (!strcmp(com_inp, "typelist"))
 		{
+			//Список всех типов элементов
 			cout << "placeholder" << endl;
 		}
 		else if (!strcmp(com_inp, "type"))
 		{
+			//Список элементов типа <type>
 			cout << "placeholder" << endl;
 		}
 		else if (!strcmp(com_inp, "info"))
 		{
+			//Вывести подробную информацию об элементе
 			cout << "placeholder" << endl;
 		}
 		else if (!strcmp(com_inp, "conn"))
 		{
+			//Показать связи элемента
 			cout << "placeholder" << endl;
 		}
 		else if (!strcmp(com_inp, "rpl"))
 		{
+			//Замена конкретного элемента
 			cout << "placeholder" << endl;
 		}
 		else if (!strcmp(com_inp, "typerpl"))
 		{
+			//Заменяем все элементы выбранного типа
 			cout << "placeholder" << endl;
 		}
 		else if (!strcmp(com_inp, "exit"))
 		{
+			//Здесь запускается обратный транслятор и запись в файл
 			cout << endl << "Press any key to finish..." << endl;
 			getchar();
 			getchar();
@@ -126,7 +153,7 @@ void main(int argc, char **argv)
 		}
 		else
 		{
-			cout << "~~~~~Wrong command!~~~~~" << endl;
+			cout << "Wrong command-0x21" << endl;
 		}
 	}
 }

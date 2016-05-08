@@ -1,3 +1,8 @@
+/*
+Designed by Ефимов В.А [3О-411Б]
+2016 год
+*/
+
 #include "bison.hpp"
 #include "lib_parse.hpp"
 #include "symtab.h"
@@ -12,6 +17,29 @@ extern void librestart(FILE *input_file);
 
 using namespace std;
 
+//Очищает данные
+int data_wipe()
+{
+	for (int i = 0; i < NHASH; i++)
+	{
+		symtab[i].name = NULL;
+		delete symtab[i].c_list;
+		symtab[i].c_list = NULL;
+	}
+	return 1;
+}
+
+int lib_wipe()
+{
+	for (int i = 0; i < NHASH; i++)
+	{
+		fpga_lib[i].name = NULL;
+		delete fpga_lib[i].pin_list;
+		fpga_lib[i].pin_list = NULL;
+	}
+	return 1;
+}
+
 
 void main(int argc, char **argv)
 {
@@ -19,6 +47,11 @@ void main(int argc, char **argv)
 	extern FILE * yyin;
 	extern FILE * libin;
 	int parse_res;
+
+	cout << "***********************************************" << endl;
+	cout << "WireCat 0.1 started" << endl;
+	cout << "Hello" << endl;
+	cout << "***********************************************" << endl;
 
 	if (argv[1] != NULL)
 	{
@@ -32,7 +65,7 @@ parse_net_again:	//warning, a wild GOTO appears
 	while (yyin == NULL)
 	{
 		char tmp[256];
-		cout << "soure path: ";
+		cout << "source path: ";
 		cin >> tmp;
 		yyin = fopen(tmp, "r+");
 		if (yyin == NULL)
@@ -45,6 +78,7 @@ parse_net_again:	//warning, a wild GOTO appears
 	if (parse_res != 0)
 	{
 		yyin = NULL;
+		data_wipe();
 		goto parse_net_again;	//HERE IT COMES
 	}
 
@@ -75,6 +109,7 @@ parse_lib_again:	//warning, a wild GOTO appears
 	if (parse_res == 1)
 	{
 		libin = NULL;
+		lib_wipe();
 		goto parse_lib_again;	//HERE IT COMES
 	}
 
@@ -83,10 +118,26 @@ parse_lib_again:	//warning, a wild GOTO appears
 	if (lib_check())
 	{
 		cout << endl << "Incorrect Netlist-0x11" << endl;
-		goto parse_net_again;
+		cout << "Try another source? (Y/N)" << endl;
+		char Y_N;
+		while (1)
+		{
+			cin >> Y_N;
+			Y_N = tolower(Y_N);
+			if (Y_N == 'y')
+			{
+				data_wipe();
+				lib_wipe;
+				yyin = NULL;
+				libin = NULL;
+				goto parse_net_again;
+			}
+			if (Y_N == 'n')
+				break;
+		}
 	}
 	else
-		cout << endl << "Netlist elements are correct!" << endl;
+		cout << endl << "Netlist is correct, all elements are described in library." << endl;
 
 	//Interface main loop:
 	while (1)

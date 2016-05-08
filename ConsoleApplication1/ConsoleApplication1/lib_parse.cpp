@@ -71,7 +71,7 @@
 #define yychar          libchar
 
 /* Copy the first part of user declarations.  */
-#line 3 "lib_parse.y" /* yacc.c:339  */
+#line 8 "lib_parse.y" /* yacc.c:339  */
 
 	#include <stdio.h>
 	#include <string.h>
@@ -139,7 +139,7 @@ extern int libdebug;
 
 union LIBSTYPE
 {
-#line 16 "lib_parse.y" /* yacc.c:355  */
+#line 21 "lib_parse.y" /* yacc.c:355  */
 
 	struct lib_ent *symp;
 	char * pins;
@@ -460,7 +460,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    32,    32,    33,    34,    37,    39,    42,    48
+       0,    37,    37,    38,    39,    42,    44,    47,    53
 };
 #endif
 
@@ -1229,31 +1229,31 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 33 "lib_parse.y" /* yacc.c:1646  */
+#line 38 "lib_parse.y" /* yacc.c:1646  */
     {lib_cnt++;}
 #line 1235 "lib_parse.cpp" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 34 "lib_parse.y" /* yacc.c:1646  */
+#line 39 "lib_parse.y" /* yacc.c:1646  */
     {lib_cnt++;}
 #line 1241 "lib_parse.cpp" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 37 "lib_parse.y" /* yacc.c:1646  */
+#line 42 "lib_parse.y" /* yacc.c:1646  */
     {(yyvsp[-1].symp)->pin_list = (yyvsp[0].pin_list);}
 #line 1247 "lib_parse.cpp" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 39 "lib_parse.y" /* yacc.c:1646  */
+#line 44 "lib_parse.y" /* yacc.c:1646  */
     {(yyvsp[-1].symp)->pin_list = (yyvsp[0].pin_list);}
 #line 1253 "lib_parse.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 43 "lib_parse.y" /* yacc.c:1646  */
+#line 48 "lib_parse.y" /* yacc.c:1646  */
     { 
 				char ** tmp = new char *[100]();
 				tmp[0] = (yyvsp[0].pins);
@@ -1263,7 +1263,7 @@ yyreduce:
     break;
 
   case 8:
-#line 49 "lib_parse.y" /* yacc.c:1646  */
+#line 54 "lib_parse.y" /* yacc.c:1646  */
     { 
 				char ** tmp = (yyvsp[-1].pin_list);
 				for(int i = 0; i<100;i++)
@@ -1508,7 +1508,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 63 "lib_parse.y" /* yacc.c:1906  */
+#line 68 "lib_parse.y" /* yacc.c:1906  */
 
 
 extern void liberror(char * s)

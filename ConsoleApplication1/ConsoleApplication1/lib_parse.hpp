@@ -65,7 +65,7 @@ extern int libdebug;
 
 union LIBSTYPE
 {
-#line 16 "lib_parse.y" /* yacc.c:1909  */
+#line 21 "lib_parse.y" /* yacc.c:1909  */
 
 	struct lib_ent *symp;
 	char * pins;

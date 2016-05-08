@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "bison.y" /* yacc.c:339  */
+#line 6 "bison.y" /* yacc.c:339  */
 
 	#include <stdio.h>
 	#include <string.h>
@@ -123,7 +123,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 11 "bison.y" /* yacc.c:355  */
+#line 16 "bison.y" /* yacc.c:355  */
 
 	struct symbol *symp;
 	int size_arr;
@@ -445,9 +445,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    36,    36,    37,    38,    41,    47,    48,    51,    52,
-      55,    56,    59,    66,    72,    78,    85,    91,    98,    99,
-     107,   112,   117,   118,   123,   128
+       0,    41,    41,    42,    43,    46,    52,    53,    56,    57,
+      60,    61,    64,    71,    77,    83,    90,    96,   103,   104,
+     112,   117,   122,   123,   128,   133
 };
 #endif
 
@@ -1256,7 +1256,7 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 42 "bison.y" /* yacc.c:1646  */
+#line 47 "bison.y" /* yacc.c:1646  */
     {
 				(yyvsp[-4].symp)->type = module; 
 			}
@@ -1264,13 +1264,13 @@ yyreduce:
     break;
 
   case 9:
-#line 52 "bison.y" /* yacc.c:1646  */
+#line 57 "bison.y" /* yacc.c:1646  */
     {(yyval.conn) = (yyvsp[-1].conn);}
 #line 1270 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 60 "bison.y" /* yacc.c:1646  */
+#line 65 "bison.y" /* yacc.c:1646  */
     {
 				(yyvsp[-2].symp)->type = wire; 
 				(yyvsp[-2].symp)->size = 1;
@@ -1281,7 +1281,7 @@ yyreduce:
     break;
 
   case 13:
-#line 67 "bison.y" /* yacc.c:1646  */
+#line 72 "bison.y" /* yacc.c:1646  */
     { 
 				(yyvsp[0].symp)->type = wire; 
 				(yyvsp[0].symp)->size = 1;
@@ -1290,7 +1290,7 @@ yyreduce:
     break;
 
   case 14:
-#line 73 "bison.y" /* yacc.c:1646  */
+#line 78 "bison.y" /* yacc.c:1646  */
     {
 				connections * t_c = new connections; 
 				t_c->add((yyvsp[-1].conn_tmp)->sym, (yyvsp[-3].symp)->name, (yyvsp[-1].conn_tmp)->index); 
@@ -1300,7 +1300,7 @@ yyreduce:
     break;
 
   case 15:
-#line 79 "bison.y" /* yacc.c:1646  */
+#line 84 "bison.y" /* yacc.c:1646  */
     {
 				connections * t_c = (yyvsp[-6].conn) ; 
 				t_c->add((yyvsp[-1].conn_tmp)->sym, (yyvsp[-3].symp)->name, (yyvsp[-1].conn_tmp)->index); 
@@ -1310,7 +1310,7 @@ yyreduce:
     break;
 
   case 16:
-#line 86 "bison.y" /* yacc.c:1646  */
+#line 91 "bison.y" /* yacc.c:1646  */
     {
 				tmp_conn * t_c = new struct tmp_conn; 
 				t_c->sym = (yyvsp[0].symp); 
@@ -1320,7 +1320,7 @@ yyreduce:
     break;
 
   case 17:
-#line 92 "bison.y" /* yacc.c:1646  */
+#line 97 "bison.y" /* yacc.c:1646  */
     {	tmp_conn * t_c = new struct tmp_conn; 
 				t_c->sym = (yyvsp[-3].symp); 
 				t_c->index = (yyvsp[-1].size_arr); 
@@ -1330,13 +1330,13 @@ yyreduce:
     break;
 
   case 18:
-#line 98 "bison.y" /* yacc.c:1646  */
+#line 103 "bison.y" /* yacc.c:1646  */
     { (yyval.size_arr) = 1;}
 #line 1336 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 100 "bison.y" /* yacc.c:1646  */
+#line 105 "bison.y" /* yacc.c:1646  */
     {
 					if((yyvsp[-3].size_arr)>(yyvsp[-1].size_arr))
 						(yyval.size_arr) = (yyvsp[-3].size_arr);
@@ -1347,7 +1347,7 @@ yyreduce:
     break;
 
   case 20:
-#line 108 "bison.y" /* yacc.c:1646  */
+#line 113 "bison.y" /* yacc.c:1646  */
     { 
 					(yyvsp[-1].symp)->type = input; 
 					(yyvsp[-1].symp)->size = (yyvsp[-2].size_arr);
@@ -1356,7 +1356,7 @@ yyreduce:
     break;
 
   case 21:
-#line 113 "bison.y" /* yacc.c:1646  */
+#line 118 "bison.y" /* yacc.c:1646  */
     { 
 					(yyvsp[-1].symp)->type = output; 
 					(yyvsp[-1].symp)->size = (yyvsp[-2].size_arr);
@@ -1365,7 +1365,7 @@ yyreduce:
     break;
 
   case 23:
-#line 119 "bison.y" /* yacc.c:1646  */
+#line 124 "bison.y" /* yacc.c:1646  */
     {
 					(yyvsp[-1].symp)->type = wire; 
 					(yyvsp[-1].symp)->size = (yyvsp[-2].size_arr);
@@ -1374,7 +1374,7 @@ yyreduce:
     break;
 
   case 24:
-#line 124 "bison.y" /* yacc.c:1646  */
+#line 129 "bison.y" /* yacc.c:1646  */
     { 
 					(yyvsp[-1].symp)->type = reg; 
 					(yyvsp[-1].symp)->size = (yyvsp[-2].size_arr);
@@ -1383,7 +1383,7 @@ yyreduce:
     break;
 
   case 25:
-#line 129 "bison.y" /* yacc.c:1646  */
+#line 134 "bison.y" /* yacc.c:1646  */
     {
 					(yyvsp[-3].symp)->type = mod_type;
 					(yyvsp[-3].symp)->size = 0;
@@ -1626,7 +1626,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 140 "bison.y" /* yacc.c:1906  */
+#line 145 "bison.y" /* yacc.c:1906  */
 
 
 extern void yyerror(char * s)

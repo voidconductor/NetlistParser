@@ -1,3 +1,8 @@
+/*
+Designed by Ефимов В.А [3О-411Б]
+2016 год
+*/
+
 %option noyywrap
 %option yylineno
 %option prefix = "lib"

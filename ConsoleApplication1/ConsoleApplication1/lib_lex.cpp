@@ -527,15 +527,19 @@ int lib_flex_debug = 0;
 #define YY_RESTORE_YY_MORE_OFFSET
 char *libtext;
 #line 1 "lib_lex.l"
+/*
+Designed by Ефимов В.А [3О-411Б]
+2016 год
+*/
 
 
-#line 9 "lib_lex.l"
+#line 14 "lib_lex.l"
 	#include "lib_parse.hpp"
 	#include <string.h>
 	#include <stdlib.h>
 	#include <iostream>
 	#include "symtab.h"
-#line 539 "lib_lex.cpp"
+#line 543 "lib_lex.cpp"
 
 #define INITIAL 0
 #define FOUND 1
@@ -749,10 +753,10 @@ YY_DECL
 		}
 
 	{
-#line 16 "lib_lex.l"
+#line 21 "lib_lex.l"
 
 
-#line 756 "lib_lex.cpp"
+#line 760 "lib_lex.cpp"
 
 	while ( 1 )		/* loops until end-of-file is reached */
 		{
@@ -822,17 +826,17 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 18 "lib_lex.l"
+#line 23 "lib_lex.l"
 {BEGIN(FOUND); return PRIMITIVE;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 19 "lib_lex.l"
+#line 24 "lib_lex.l"
 {BEGIN(FOUND); return LIB_MODULE;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 20 "lib_lex.l"
+#line 25 "lib_lex.l"
 {
 						struct lib_ent *sp = lib_search(libtext);
 						liblval.symp = sp;
@@ -841,23 +845,23 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 25 "lib_lex.l"
+#line 30 "lib_lex.l"
 {BEGIN(PART);}	
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 26 "lib_lex.l"
+#line 31 "lib_lex.l"
 {}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 27 "lib_lex.l"
+#line 32 "lib_lex.l"
 {}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 28 "lib_lex.l"
+#line 33 "lib_lex.l"
 {
 									liblval.pins = strdup(libtext);
 									return PINS;
@@ -865,42 +869,42 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 32 "lib_lex.l"
+#line 37 "lib_lex.l"
 {BEGIN(INITIAL);}
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 33 "lib_lex.l"
+#line 38 "lib_lex.l"
 {}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 34 "lib_lex.l"
+#line 39 "lib_lex.l"
 {}
 	YY_BREAK
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 35 "lib_lex.l"
+#line 40 "lib_lex.l"
 {}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 36 "lib_lex.l"
+#line 41 "lib_lex.l"
 {}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 37 "lib_lex.l"
+#line 42 "lib_lex.l"
 {}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 38 "lib_lex.l"
+#line 43 "lib_lex.l"
 ECHO;
 	YY_BREAK
-#line 904 "lib_lex.cpp"
+#line 908 "lib_lex.cpp"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(FOUND):
 case YY_STATE_EOF(PART):
@@ -1911,6 +1915,6 @@ void libfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 38 "lib_lex.l"
+#line 43 "lib_lex.l"
 
 

@@ -508,7 +508,11 @@ int yy_flex_debug = 0;
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
 #line 1 "lex.l"
-#line 5 "lex.l"
+/*
+Designed by Ефимов В.А [3О-411Б]
+2016 год
+*/
+#line 10 "lex.l"
 	#include "bison.hpp"
 	#include "symtab.h"
 	#include <string.h>
@@ -517,7 +521,7 @@ char *yytext;
 	char curr_module[80];
 	int mod_begin;
 	int mod_end=9999;
-#line 521 "lex.cpp"
+#line 525 "lex.cpp"
 
 #define INITIAL 0
 
@@ -726,9 +730,9 @@ YY_DECL
 		}
 
 	{
-#line 15 "lex.l"
+#line 20 "lex.l"
 
-#line 732 "lex.cpp"
+#line 736 "lex.cpp"
 
 	while ( 1 )		/* loops until end-of-file is reached */
 		{
@@ -797,7 +801,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 16 "lex.l"
+#line 21 "lex.l"
 { 
 								mod_begin = yylineno;
 								char *tmp = strdup(yytext);
@@ -811,32 +815,32 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 26 "lex.l"
+#line 31 "lex.l"
 { return ENDMODULE; mod_end = yylineno;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 27 "lex.l"
+#line 32 "lex.l"
 { return INPUT;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 28 "lex.l"
+#line 33 "lex.l"
 { return OUTPUT;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 29 "lex.l"
+#line 34 "lex.l"
 { return WIRE;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 30 "lex.l"
+#line 35 "lex.l"
 { return REG;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 32 "lex.l"
+#line 37 "lex.l"
 {
 								struct symbol *sp = lookup(yytext);
 								if (yylineno >= mod_begin && yylineno <= mod_end)
@@ -853,7 +857,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 45 "lex.l"
+#line 50 "lex.l"
 {
 								yylval.size_arr = atoi(yytext);
 								return SIZE_A;
@@ -862,27 +866,27 @@ YY_RULE_SETUP
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 49 "lex.l"
+#line 54 "lex.l"
 {}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 50 "lex.l"
+#line 55 "lex.l"
 {}
 	YY_BREAK
 case 11:
-#line 52 "lex.l"
+#line 57 "lex.l"
 case 12:
 YY_RULE_SETUP
-#line 52 "lex.l"
+#line 57 "lex.l"
 return yytext[0];
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 53 "lex.l"
+#line 58 "lex.l"
 ECHO;
 	YY_BREAK
-#line 886 "lex.cpp"
+#line 890 "lex.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1889,6 +1893,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 53 "lex.l"
+#line 58 "lex.l"
 
 

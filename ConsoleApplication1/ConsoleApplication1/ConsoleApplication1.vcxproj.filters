@@ -39,6 +39,9 @@
     <ClCompile Include="lib_parse.cpp">
       <Filter>Файлы исходного кода\Парсеры</Filter>
     </ClCompile>
+    <ClCompile Include="to_text_translator.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bison.hpp">

@@ -33,6 +33,7 @@ Designed by Ефимов В.А [3О-411Б]
 %type <size_arr> range
 %type <conn> args
 %type <conn> conn_list
+%type <conn> arg_list
 %type <conn_tmp> s_name
 
 
@@ -46,6 +47,7 @@ netlist:	/*Стартовый символ*/
 dev_mod:	MODULE NAME args ';' def_list ENDMODULE 
 			{
 				$2->type = module; 
+				$2->c_list = $3;
 			}
 	;
 
@@ -53,12 +55,22 @@ def_list:	definition
 	|		def_list definition
 	;
 
-args:		'(' arg_list ')'
+args:		'(' arg_list ')'	{$$ = $2;}
 	|		'(' conn_list ')'	{$$ = $2;}
 	;
 
 arg_list:	NAME
+			{
+				connections * t_c = new connections; 
+				t_c->add($1, "external", -1);
+				$$ = t_c;
+			}
 	|		arg_list ',' NAME
+			{
+				connections * t_c = $1;
+				t_c->add($3, "external", -1);
+				$$ = t_c;
+			}
 	;
 
 wire_list:	NAME ',' NAME
@@ -79,12 +91,14 @@ conn_list:	'.'NAME '('s_name')'
 				connections * t_c = new connections; 
 				t_c->add($4->sym, $2->name, $4->index); 
 				$$ = t_c;
+				delete $4;
 			}
 	|		conn_list ',' '.'NAME '('s_name')' 
 			{
 				connections * t_c = $1 ; 
 				t_c->add($6->sym, $4->name, $6->index); 
 				$$ = t_c;
+				delete $6;
 			}
 	;
 s_name:		NAME	
@@ -94,7 +108,8 @@ s_name:		NAME
 				$$ = t_c;
 			}
 	|		NAME '[' SIZE_A ']' 
-			{	tmp_conn * t_c = new struct tmp_conn; 
+			{	
+				tmp_conn * t_c = new struct tmp_conn; 
 				t_c->sym = $1; 
 				t_c->index = $3; 
 				$$ = t_c;

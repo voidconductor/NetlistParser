@@ -25,6 +25,7 @@ Designed by Хєшьют Т.Р [3Ю-411С]
 								{
 									curr_module[i-7] = tmp[i];
 								}
+								free(tmp);
 								yyless(7);
 								return MODULE; 
 							}

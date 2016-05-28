@@ -809,38 +809,39 @@ YY_RULE_SETUP
 								{
 									curr_module[i-7] = tmp[i];
 								}
+								free(tmp);
 								yyless(7);
 								return MODULE; 
 							}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 31 "lex.l"
+#line 32 "lex.l"
 { return ENDMODULE; mod_end = yylineno;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 32 "lex.l"
+#line 33 "lex.l"
 { return INPUT;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 33 "lex.l"
+#line 34 "lex.l"
 { return OUTPUT;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 34 "lex.l"
+#line 35 "lex.l"
 { return WIRE;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 35 "lex.l"
+#line 36 "lex.l"
 { return REG;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 37 "lex.l"
+#line 38 "lex.l"
 {
 								struct symbol *sp = lookup(yytext);
 								if (yylineno >= mod_begin && yylineno <= mod_end)
@@ -857,7 +858,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 50 "lex.l"
+#line 51 "lex.l"
 {
 								yylval.size_arr = atoi(yytext);
 								return SIZE_A;
@@ -866,27 +867,27 @@ YY_RULE_SETUP
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 54 "lex.l"
+#line 55 "lex.l"
 {}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 55 "lex.l"
+#line 56 "lex.l"
 {}
 	YY_BREAK
 case 11:
-#line 57 "lex.l"
+#line 58 "lex.l"
 case 12:
 YY_RULE_SETUP
-#line 57 "lex.l"
+#line 58 "lex.l"
 return yytext[0];
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 58 "lex.l"
+#line 59 "lex.l"
 ECHO;
 	YY_BREAK
-#line 890 "lex.cpp"
+#line 891 "lex.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1893,6 +1894,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 58 "lex.l"
+#line 59 "lex.l"
 
 

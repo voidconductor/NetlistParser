@@ -3,6 +3,8 @@ Designed by Ефимов В.А [3О-411Б]
 2016 год
 */
 
+//using namespace std;
+
 #include "bison.hpp"
 #include "lib_parse.hpp"
 #include "symtab.h"
@@ -15,8 +17,6 @@ Designed by Ефимов В.А [3О-411Б]
 
 extern void yyrestart(FILE *input_file);
 extern void librestart(FILE *input_file);
-
-using namespace std;
 
 //Очищает данные
 int data_wipe()
@@ -140,28 +140,33 @@ parse_lib_again:	//warning, a wild GOTO appears
 	else
 		cout << endl << "Netlist is correct, all elements are described in library." << endl;
 
+	cout << "Type \"help\" for list of commands" << endl;
 	//Interface main loop:
 	while (1)
 	{
+		cout << ">";
 		char com_inp[20];
-		cout << "*****************************************************************" << endl;
-		cout << endl << "Command list:" << endl;
-		cout << "1. - \"all\" - List all netlist elements." << endl;
-		cout << "2. - \"typelist\" - List all netlist element types." << endl;
-		cout << "3. - \"type\" - List all elements of choosen type." << endl;
-		cout << "4. - \"info\" - Show element full info." << endl;
-		cout << "5. - \"conn\" - Show elements, connected to choosen one." << endl;
-		cout << "6. - \"rpl\" - Replace element." << endl;
-		cout << "7. - \"typerpl\" - Replace all elements of choosen type." << endl;
-		cout << "8. - \"exit\" - Save and Quit" << endl;
 		cin >> com_inp;
 		//Нечувствительность к регистру
 		for (int i = 0; i < 20; i++)
 		{
 			com_inp[i] = tolower(com_inp[i]);
 		}
-
-		if (!strcmp(com_inp, "all")) //Вывести информацию обо всех элементах
+		if (!strcmp(com_inp, "help"))
+		{
+			cout << "*****************************************************************" << endl;
+			cout << endl << "Command list:" << endl;
+			cout << " all      - List all netlist elements." << endl;
+			cout << " typelist - List all netlist element types." << endl;
+			cout << " type     - List all elements of choosen type." << endl;
+			cout << " info     - Show element full info." << endl;
+			cout << " conn     - Show elements, connected to choosen one." << endl;
+			cout << " rpl      - Replace element." << endl;
+			cout << " typerpl  - Replace all elements of choosen type." << endl;
+			cout << " help     - Show commands." << endl;
+			cout << " exit     - Save and Quit" << endl;
+		}
+		else if (!strcmp(com_inp, "all")) //Вывести информацию обо всех элементах
 		{
 			cout << "Elements of this netlist:" << endl;
 			for (int i = 0; i < NHASH; i++)
@@ -209,7 +214,7 @@ parse_lib_again:	//warning, a wild GOTO appears
 					cout << search_res[i]->name << endl;
 				}
 			}
-			delete search_arg;
+			delete[] search_arg;
 			cout << "continue..." << endl;
 			getchar();
 			getchar();
@@ -237,7 +242,7 @@ parse_lib_again:	//warning, a wild GOTO appears
 					cout << "Connections:" << endl;
 					for (int i = 0; i < (tmp_res->c_list->conn_list.size()); i++)
 					{
-						if (tmp_res->type == element)
+						if (tmp_res->type == element || tmp_res->type == module)
 						{
 							cout << "                ." << tmp_res->c_list->pins[i] << " to " << tmp_res->c_list->conn_list[i]->name;
 							if (tmp_res->c_list->subw_ind[i] >= 0)
@@ -260,7 +265,7 @@ parse_lib_again:	//warning, a wild GOTO appears
 				cout << "Used times:		" << tmp_res->count << endl;
 				cout << "First used:     line #" << tmp_res->first_used << endl;
 			}
-			delete search_arg;
+			delete[] search_arg;
 			cout << "continue..." << endl;
 			getchar();
 			getchar();

@@ -5,6 +5,7 @@ Designed by Ефимов В.А [3О-411Б]
 
 #pragma once
 #include <vector>
+#include <map>
 
 using namespace std;
 //Типы элементов

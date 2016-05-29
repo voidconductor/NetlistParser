@@ -22,6 +22,7 @@ struct symbol {
 	int lesser_bit = 0;				//Младший бит (иногда это не 0)
 	int count;						//Количество использований
 	int first_used;					//Строка, на которой элемент был встречен первый раз
+	bool is_deleted = false;		//Флаг означающий, что элемент был заменен но не удален окончательно
 };
 
 struct tmp_conn {					//Временная служебная структура
@@ -72,3 +73,7 @@ char * dechipher(nodetype);
 int netlist_translator(string);
 //Общее количество проводов в схеме
 extern int total_wires_number;
+//Показать связи элемента
+int print_connections(struct symbol *);
+//Замена одного элемента
+void replace_one(struct symbol *);

@@ -102,6 +102,8 @@ int netlist_translator(string file_name)
 		if ((*it).second->type == element)
 		{
 			out_file << "    ";
+			if ((*it).second->is_deleted)
+				out_file << "//";
 			out_file << (*it).second->el_type << " ";
 			out_file << (*it).second->name;
 
@@ -118,6 +120,8 @@ int netlist_translator(string file_name)
 				{
 					out_file << endl << "        ";
 					prev_position = out_file.tellp();
+					if ((*it).second->is_deleted)
+						out_file << "//";
 				}
 				if ((i + 1) < (*it).second->c_list->conn_list.size())
 					out_file << ", ";

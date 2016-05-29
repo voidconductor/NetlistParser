@@ -171,7 +171,7 @@ parse_lib_again:	//warning, a wild GOTO appears
 			cout << "Elements of this netlist:" << endl;
 			for (auto it = symtab.begin(); it != symtab.end(); ++it)
 			{
-				if (((*it).second->type != def_type) && ((*it).second->type != mod_type))
+				if (((*it).second->type != def_type) && ((*it).second->type != mod_type) && ((*it).second->is_deleted == false))
 				{
 					if ((*it).second->type == element)
 						cout << (*it).second->el_type << " ";
@@ -268,12 +268,42 @@ parse_lib_again:	//warning, a wild GOTO appears
 		else if (!strcmp(com_inp, "conn"))
 		{
 			//Показать связи элемента
-			cout << "placeholder" << endl;
+			string search_arg = "";
+			struct symbol * tmp_res;
+			cout << "element name: ";
+
+			cin >> search_arg;
+
+			tmp_res = symtab[search_arg];
+			if (tmp_res == NULL)
+			{
+				cout << "Element not found-0x33" << endl;
+			}
+			else
+			{
+				print_connections(tmp_res);
+			}
 		}
 		else if (!strcmp(com_inp, "rpl"))
 		{
 			//Замена конкретного элемента
-			cout << "placeholder" << endl;
+			string search_arg = "";
+			struct symbol * tmp_res;
+			cout << "element name: ";
+
+			cin >> search_arg;
+
+			tmp_res = symtab[search_arg];
+			if (tmp_res == NULL)
+			{
+				cout << "Element not found-0x33" << endl;
+			}
+			else if (tmp_res->type != element)
+				cout << "Element cannot be replaced" << endl;
+			else
+			{
+				replace_one(tmp_res);
+			}
 		}
 		else if (!strcmp(com_inp, "typerpl"))
 		{
@@ -305,7 +335,10 @@ parse_lib_again:	//warning, a wild GOTO appears
 						break;
 				}
 				else
+				{
+					fclose(check_existance);
 					break;
+				}
 			}
 			netlist_translator(result_file_name);
 			cout << endl << "Result saved to \"" << result_file_name << "\"" << endl;

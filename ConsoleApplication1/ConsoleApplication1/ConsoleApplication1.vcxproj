@@ -172,6 +172,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="replace.cpp" />
     <ClCompile Include="to_text_translator.cpp" />
   </ItemGroup>
   <ItemGroup>

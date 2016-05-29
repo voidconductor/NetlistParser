@@ -4,6 +4,7 @@ Designed by Ефимов В.А [3О-411Б]
 */
 
 #include <stdio.h>
+#include <iostream>
 #include <string.h>
 #include <stdlib.h>
 #include <vector>
@@ -165,4 +166,41 @@ char * dechipher(nodetype in)
 		return "def_type";
 	else
 		return "error type";
+}
+
+//Вывод всех элементов связанных с данным
+int print_connections(struct symbol * root_element)
+{
+	cout << root_element->name << " is connected to these elements:" << endl;
+	for (int i = 0; i < root_element->c_list->conn_list.size(); i++)
+	{
+		struct symbol * low_branch = root_element->c_list->conn_list[i];
+		cout << "\t";
+		if (root_element->type == element)
+		{
+			cout << "." << root_element->c_list->pins[i] << " to ";
+			cout << low_branch->name;
+			if (root_element->c_list->subw_ind[i] >= 0)
+				cout << "[" << root_element->c_list->subw_ind[i] << "]" << endl;
+			else
+				cout << endl;
+			for (int j = 0; j < low_branch->c_list->conn_list.size(); j++)
+			{
+				struct symbol * lowest_branch = low_branch->c_list->conn_list[j];
+				if (lowest_branch != root_element)
+				{
+					cout << "\t\t";
+					cout << lowest_branch->name << endl;
+				}
+					
+			}
+		}
+		else
+		{
+			if (root_element->c_list->subw_ind[i] >= 0)
+				cout << "[" << root_element->c_list->subw_ind[i] << "] to ";
+			cout << low_branch->name << endl;
+		}
+	}
+	return 0;
 }

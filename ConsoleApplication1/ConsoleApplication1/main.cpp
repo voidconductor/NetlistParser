@@ -11,6 +11,8 @@ Designed by Ефимов В.А [3О-411Б]
 
 #include <stdio.h>
 #include <iostream>
+#include <string>
+#include <sstream>
 #include <stdlib.h>
 #include <ctype.h>
 #include <vector>
@@ -21,23 +23,13 @@ extern void librestart(FILE *input_file);
 //Очищает данные
 int data_wipe()
 {
-	for (int i = 0; i < NHASH; i++)
-	{
-		symtab[i].name = NULL;
-		delete symtab[i].c_list;
-		symtab[i].c_list = NULL;
-	}
+	symtab.clear();
 	return 1;
 }
 //Сбрасывает библиотеку
 int lib_wipe()
 {
-	for (int i = 0; i < NHASH; i++)
-	{
-		fpga_lib[i].name = NULL;
-		delete fpga_lib[i].pin_list;
-		fpga_lib[i].pin_list = NULL;
-	}
+	fpga_lib.clear();
 	return 1;
 }
 
@@ -114,6 +106,14 @@ parse_lib_again:	//warning, a wild GOTO appears
 		goto parse_lib_again;	//HERE IT COMES
 	}
 
+	//Восстановление связей между элементами
+	for (auto it = symtab.begin(); it != symtab.end(); ++it)
+	{
+		if ((*it).second->type == element) {
+			rewire((*it).second);
+		}
+	}
+
 
 	//Проверка элементов нетлиста на принадлежность библиотеке
 	if (lib_check())
@@ -169,12 +169,11 @@ parse_lib_again:	//warning, a wild GOTO appears
 		else if (!strcmp(com_inp, "all")) //Вывести информацию обо всех элементах
 		{
 			cout << "Elements of this netlist:" << endl;
-			for (int i = 0; i < NHASH; i++)
+			for (auto it = symtab.begin(); it != symtab.end(); ++it)
 			{
-				if ((symtab[i].name != NULL) && (symtab[i].type != def_type) && (symtab[i].type != mod_type))
+				if (((*it).second->type != def_type) && ((*it).second->type != mod_type))
 				{
-					cout << symtab[i].name << endl;
-					// Доделать вывод типа элемента и разрядность(?)
+					cout << (*it).second->name << endl;
 				}
 			}
 			cout << "continue..." << endl;
@@ -221,12 +220,13 @@ parse_lib_again:	//warning, a wild GOTO appears
 		}
 		else if (!strcmp(com_inp, "info")) //Вывести подробную информацию об элементе
 		{
-			char * search_arg = new char[80];
+			string search_arg = "";
 			struct symbol * tmp_res;
 			cout << "element name: ";
+
 			cin >> search_arg;
 
-			tmp_res = name_search(search_arg);
+			tmp_res = symtab[search_arg];
 			if (tmp_res == NULL)
 			{
 				cout << "Element not found-0x33" << endl;
@@ -265,7 +265,6 @@ parse_lib_again:	//warning, a wild GOTO appears
 				cout << "Used times:		" << tmp_res->count << endl;
 				cout << "First used:     line #" << tmp_res->first_used << endl;
 			}
-			delete[] search_arg;
 			cout << "continue..." << endl;
 			getchar();
 			getchar();

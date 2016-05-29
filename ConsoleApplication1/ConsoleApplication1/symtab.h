@@ -47,12 +47,11 @@ struct lib_ent {
 
 
 
-//Общее количество элементов в таблице символов, число должно быть простым (?), иначе хэш будет плохо считаться.
-#define NHASH 9997
+
 //Таблица симоволов
-extern struct symbol symtab[NHASH];
+extern map <string, struct symbol*> symtab;
 //Библиотека
-extern struct lib_ent fpga_lib[NHASH];
+extern map <string, struct lib_ent*> fpga_lib;
 //Функция поиска в таблице по имени ( использует хэш-функцию)
 struct symbol *lookup(char *);
 //Функция, обеспечивающая полную связность элементов.
@@ -65,5 +64,3 @@ extern int lib_cnt;
 int lib_check();
 //Функция поиска элементов принадлежащих типу
 vector<struct symbol*> search(char *);
-//Просто быстрый поиск элемента нетлиста по имени
-struct symbol *name_search(char *);

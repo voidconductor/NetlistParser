@@ -1421,8 +1421,8 @@ yyreduce:
 					(yyvsp[-2].symp)->type = element;
 					(yyvsp[-2].symp)->el_type = (yyvsp[-3].symp)->name;
 					(yyvsp[-2].symp)->size = 0;
+					delete (yyvsp[-2].symp)->c_list;
 					(yyvsp[-2].symp)->c_list = (yyvsp[-1].conn);
-					rewire((yyvsp[-2].symp));
 				}
 #line 1428 "bison.cpp" /* yacc.c:1646  */
     break;

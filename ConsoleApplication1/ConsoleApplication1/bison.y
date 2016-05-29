@@ -153,8 +153,8 @@ definition:		INPUT range NAME ';'
 					$2->type = element;
 					$2->el_type = $1->name;
 					$2->size = 0;
+					delete $2->c_list;
 					$2->c_list = $3;
-					rewire($2);
 				}
 	;
 %%

@@ -11,11 +11,14 @@ Designed by Хєшьют Т.Р [3Ю-411С]
 	
 	extern int yylex();
 	extern void yyerror(char *s);
+
+	int total_wires_number = 0;
 %}
 
 %union {
 	struct symbol *symp;
 	int size_arr;
+	int bit_size[2];
 	class connections * conn;
 	struct tmp_conn * conn_tmp;
 }
@@ -30,7 +33,7 @@ Designed by Хєшьют Т.Р [3Ю-411С]
 %token <syntax> WIRE;
 %token <syntax> REG;
 
-%type <size_arr> range
+%type <bit_size> range
 %type <conn> args
 %type <conn> conn_list
 %type <conn> arg_list
@@ -79,11 +82,13 @@ wire_list:	NAME ',' NAME
 				$1->size = 1;
 				$3->type = wire; 
 				$3->size = 1;
+				total_wires_number+=2;
 			}
 	|		wire_list ',' NAME	
 			{ 
 				$3->type = wire; 
 				$3->size = 1;
+				total_wires_number++;
 			}
 	;
 conn_list:	'.'NAME '('s_name')'
@@ -115,35 +120,38 @@ s_name:		NAME
 				$$ = t_c;
 			}
 	;
-range:			{ $$ = 1;}
+range:			{ $$[0] = 1; $$[1] = 0;}
 	|			'[' SIZE_A ':' SIZE_A ']'	
 				{
-					if($2>$4)
-						$$ = $2;
-					else
-						$$ = $4;
+					$$[0] = $2;
+					$$[1] = $4;
 				}
 	;
 definition:		INPUT range NAME ';' 
 				{ 
 					$3->type = input; 
-					$3->size = $2;
+					$3->size = $2[0];
+					$3->lesser_bit = $2[1];
 				}
 	|			OUTPUT range NAME ';' 
 				{ 
 					$3->type = output; 
-					$3->size = $2;
+					$3->size = $2[0];
+					$3->lesser_bit = $2[1];
 				}
 	|			WIRE wire_list ';'
 	|			WIRE range NAME ';'	
 				{
 					$3->type = wire; 
-					$3->size = $2;
+					$3->size = $2[0];
+					$3->lesser_bit = $2[1];
+					total_wires_number++;
 				}
 	|			REG range NAME ';'	
 				{ 
 					$3->type = reg; 
-					$3->size = $2;
+					$3->size = $2[0];
+					$3->lesser_bit = $2[1];
 				}
 	|			NAME NAME args ';'	
 				{

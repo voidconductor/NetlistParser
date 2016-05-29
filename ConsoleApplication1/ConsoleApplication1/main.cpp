@@ -177,16 +177,12 @@ parse_lib_again:	//warning, a wild GOTO appears
 						cout << (*it).second->el_type << " ";
 					else
 						cout << dechipher((*it).second->type) << " ";
-					cout << (*it).second->name << " ";
 					if ((*it).second->size > 1)
-						cout << "[" << (*it).second->size << "]" << endl;
-					else
-						cout << endl;
+						cout << "[" << (*it).second->size << ":" << (*it).second->lesser_bit << "]";
+					cout << (*it).second->name << endl;
+					
 				}
 			}
-			cout << "continue..." << endl;
-			getchar();
-			getchar();
 		}
 		else if (!strcmp(com_inp, "typelist")) //Список всех типов элементов
 		{
@@ -197,9 +193,6 @@ parse_lib_again:	//warning, a wild GOTO appears
 			{
 				cout << search_res[i]->name << endl;
 			}
-			cout << "continue..." << endl;
-			getchar();
-			getchar();
 		}
 		else if (!strcmp(com_inp, "type"))		//Список элементов типа <type>
 		{
@@ -222,9 +215,6 @@ parse_lib_again:	//warning, a wild GOTO appears
 				}
 			}
 			delete[] search_arg;
-			cout << "continue..." << endl;
-			getchar();
-			getchar();
 		}
 		else if (!strcmp(com_inp, "info")) //Вывести подробную информацию об элементе
 		{
@@ -269,14 +259,11 @@ parse_lib_again:	//warning, a wild GOTO appears
 						}
 					}
 				}
-				cout << "Size in bits:	" << tmp_res->size << endl;
+				cout << "Size in bits:	" << tmp_res->size - tmp_res->lesser_bit + 1 << endl;
 				cout << "Host module:	" << tmp_res->host_module << endl;
-				cout << "Used times:		" << tmp_res->count << endl;
+				cout << "Used times:     " << tmp_res->count << endl;
 				cout << "First used:     line #" << tmp_res->first_used << endl;
 			}
-			cout << "continue..." << endl;
-			getchar();
-			getchar();
 		}
 		else if (!strcmp(com_inp, "conn"))
 		{
@@ -296,9 +283,32 @@ parse_lib_again:	//warning, a wild GOTO appears
 		else if (!strcmp(com_inp, "exit"))
 		{
 			//Здесь запускается обратный транслятор и запись в файл
-			cout << endl << "Press any key to finish..." << endl;
-			getchar();
-			getchar();
+			string result_file_name = "";
+
+			while (1)
+			{
+				cout << "result file name: ";
+				cin >> result_file_name;
+
+				FILE * check_existance = fopen(result_file_name.c_str(), "r");
+
+				if (check_existance != NULL)
+				{
+					cout << "File already exists" << endl;
+					cout << "Rewrite (Y/N)";
+
+					char yeno;
+
+					cin >> yeno;
+					yeno = tolower(yeno);
+					if (yeno == 'y')
+						break;
+				}
+				else
+					break;
+			}
+			netlist_translator(result_file_name);
+			cout << endl << "Result saved to \"" << result_file_name << "\"" << endl;
 			return;
 		}
 		else

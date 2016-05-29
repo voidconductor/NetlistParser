@@ -6,6 +6,7 @@ Designed by Ефимов В.А [3О-411Б]
 #pragma once
 #include <vector>
 #include <map>
+#include <string>
 
 using namespace std;
 //Типы элементов - обязятально внести всё в функцию "char * dechipher"
@@ -15,9 +16,10 @@ struct symbol {
 	class connections *c_list;		//Связи элемента
 	char *name;						//Имя элемента
 	char *host_module;				//Модуль, в который входит элемент
-	nodetype type = def_type;					//Тип узла
+	nodetype type = def_type;		//Тип узла
 	char *el_type;					//Имя типа элемента из библиотеки
 	int size;						//Размер в битах (для проводов)
+	int lesser_bit = 0;				//Младший бит (иногда это не 0)
 	int count;						//Количество использований
 	int first_used;					//Строка, на которой элемент был встречен первый раз
 };
@@ -66,3 +68,7 @@ int lib_check();
 vector<struct symbol*> search(char *);
 //Дешифратор перечислимых типов
 char * dechipher(nodetype);
+//Обратный транслятор
+int netlist_translator(string);
+//Общее количество проводов в схеме
+extern int total_wires_number;

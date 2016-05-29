@@ -146,3 +146,23 @@ vector<struct symbol*> search(char * name)
 	}
 	return found;
 }
+//ѕревращает перечислимый тип в сторки дл€ вывода
+char * dechipher(nodetype in)
+{
+	if (in == wire)
+		return "wire";
+	if (in == module)
+		return "module";
+	if (in == input)
+		return "input";
+	if (in == output)
+		return "output";
+	if (in == element)
+		return "element";
+	if (in == mod_type)
+		return "mod_type";
+	if (in == def_type)
+		return "def_type";
+	else
+		return "error type";
+}

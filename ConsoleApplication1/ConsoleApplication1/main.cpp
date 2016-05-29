@@ -128,7 +128,7 @@ parse_lib_again:	//warning, a wild GOTO appears
 			if (Y_N == 'y')
 			{
 				data_wipe();
-				lib_wipe;
+				lib_wipe();
 				yyin = NULL;
 				libin = NULL;
 				goto parse_net_again;
@@ -173,7 +173,15 @@ parse_lib_again:	//warning, a wild GOTO appears
 			{
 				if (((*it).second->type != def_type) && ((*it).second->type != mod_type))
 				{
-					cout << (*it).second->name << endl;
+					if ((*it).second->type == element)
+						cout << (*it).second->el_type << " ";
+					else
+						cout << dechipher((*it).second->type) << " ";
+					cout << (*it).second->name << " ";
+					if ((*it).second->size > 1)
+						cout << "[" << (*it).second->size << "]" << endl;
+					else
+						cout << endl;
 				}
 			}
 			cout << "continue..." << endl;
@@ -185,7 +193,7 @@ parse_lib_again:	//warning, a wild GOTO appears
 			vector<symbol *> search_res;
 			search_res = search("mod_type");
 			cout << "Elements types: " << endl;
-			for (int i = 0; i < search_res.size(); i++)
+			for (int i = 0; i < (int)search_res.size(); i++)
 			{
 				cout << search_res[i]->name << endl;
 			}
@@ -208,7 +216,7 @@ parse_lib_again:	//warning, a wild GOTO appears
 			else
 			{
 				cout << "Elements of this type: " << search_arg << endl;
-				for (int i = 0; i < search_res.size(); i++)
+				for (int i = 0; i < (int)search_res.size(); i++)
 				{
 					cout << search_res[i]->name << endl;
 				}
@@ -235,12 +243,13 @@ parse_lib_again:	//warning, a wild GOTO appears
 			{
 				cout << "-------------------------------------------------------------------" << endl;
 				cout << "Object:         " << tmp_res->name << endl;
-				cout << "Type:           " << tmp_res->type << endl;
-				cout << "Element type:   " << tmp_res->el_type << endl;
+				cout << "Type:           " << dechipher(tmp_res->type) << endl;
+				if (tmp_res->type == element)
+					cout << "Element type:   " << tmp_res->el_type << endl;
 				if (tmp_res->c_list != NULL)
 				{
 					cout << "Connections:" << endl;
-					for (int i = 0; i < (tmp_res->c_list->conn_list.size()); i++)
+					for (int i = 0; i < (int)(tmp_res->c_list->conn_list.size()); i++)
 					{
 						if (tmp_res->type == element || tmp_res->type == module)
 						{

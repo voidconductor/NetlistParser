@@ -8,7 +8,7 @@ Designed by Ефимов В.А [3О-411Б]
 #include <map>
 
 using namespace std;
-//Типы элементов
+//Типы элементов - обязятально внести всё в функцию "char * dechipher"
 enum nodetype {wire, reg, module, input, output, element, mod_type, def_type};
 //Структура данных
 struct symbol {
@@ -64,3 +64,5 @@ extern int lib_cnt;
 int lib_check();
 //Функция поиска элементов принадлежащих типу
 vector<struct symbol*> search(char *);
+//Дешифратор перечислимых типов
+char * dechipher(nodetype);

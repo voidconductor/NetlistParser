@@ -116,7 +116,8 @@ conn_list:	'.'NAME '('s_name')'
 s_name:		NAME	
 			{
 				tmp_conn * t_c = new struct tmp_conn; 
-				t_c->sym = $1; 
+				t_c->sym = $1;
+				t_c->index = -1;
 				$$ = t_c;
 			}
 	|		NAME '[' SIZE_A ']' 

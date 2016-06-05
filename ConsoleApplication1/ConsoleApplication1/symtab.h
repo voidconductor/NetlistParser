@@ -11,6 +11,20 @@ Designed by Ефимов В.А [3О-411Б]
 using namespace std;
 //Типы элементов - обязятально внести всё в функцию "char * dechipher"
 enum nodetype {wire, reg, module, input, output, element, mod_type, def_type};
+
+class connections {					//Описание связей элемента
+public:
+	vector<struct symbol*> conn_list;	//Указатели на подключенные элементы
+	vector<char*> pins;					//Входы и выходы элемента
+	vector<int> subw_ind;				//номер линии, если есть
+	void add(struct symbol * conn, char *pin, int ind)
+	{
+		conn_list.push_back(conn);
+		pins.push_back(pin);
+		subw_ind.push_back(ind);
+	}
+};
+
 //Структура данных
 struct symbol {
 	class connections *c_list;		//Связи элемента
@@ -23,6 +37,12 @@ struct symbol {
 	int count;						//Количество использований
 	int first_used;					//Строка, на которой элемент был встречен первый раз
 	bool is_deleted = false;		//Флаг означающий, что элемент был заменен но не удален окончательно
+
+	~symbol()
+	{
+		delete c_list;
+		free(name);
+	}
 };
 
 struct tmp_conn {					//Временная служебная структура
@@ -30,22 +50,15 @@ struct tmp_conn {					//Временная служебная структура
 	int index;
 };
 
-class connections {					//Описание связей элемента
-	public:
-		vector<struct symbol*> conn_list;	//Указатели на подключенные элементы
-		vector<char*> pins;					//Входы и выходы элемента
-		vector<int> subw_ind;				//номер линии, если есть
-		void add(struct symbol * conn, char *pin, int ind)
-		{
-			conn_list.push_back(conn);
-			pins.push_back(pin);
-			subw_ind.push_back(ind);
-		}
-};
-
 struct lib_ent {
 	char *name;
 	char ** pin_list; //Выделяйте 100 на всякий случай, бывает очень много пинов.
+
+	~lib_ent()
+	{
+		free(name);
+		delete[] pin_list;
+	}
 };
 
 

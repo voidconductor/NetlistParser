@@ -23,12 +23,21 @@ extern void librestart(FILE *input_file);
 //Очищает данные
 int data_wipe()
 {
+	
+	for (auto it = symtab.begin(); it != symtab.end(); ++it)
+	{
+		delete (*it).second;
+	}
 	symtab.clear();
 	return 1;
 }
 //Сбрасывает библиотеку
 int lib_wipe()
 {
+	for (auto it = fpga_lib.begin(); it != fpga_lib.end(); ++it)
+	{
+		delete (*it).second;
+	}
 	fpga_lib.clear();
 	return 1;
 }
@@ -293,19 +302,26 @@ parse_lib_again:	//warning, a wild GOTO appears
 			cin >> search_arg;
 			if (symtab.count(search_arg) == 0)
 				cout << "Element not found-0x33" << endl;
-			else
-				tmp_res = symtab[search_arg];
-			if (tmp_res->type != element)
-				cout << "Element cannot be replaced" << endl;
-			else
+			else		
 			{
-				replace_one(tmp_res);
+				tmp_res = symtab[search_arg];
+				if (tmp_res->type != element)
+					cout << "Element cannot be replaced" << endl;
+				else
+				{
+					replace_one(tmp_res);
+				}
 			}
 		}
 		else if (!strcmp(com_inp, "typerpl"))
 		{
-			//Заменяем все элементы выбранного типа
-			cout << "placeholder" << endl;
+			string search_arg;
+			struct symbol * tmp_res;
+			cout << "type name: ";
+
+			cin >> search_arg;
+			
+			replace_type(strdup(search_arg.c_str()));
 		}
 		else if (!strcmp(com_inp, "exit"))
 		{
@@ -339,6 +355,8 @@ parse_lib_again:	//warning, a wild GOTO appears
 			}
 			netlist_translator(result_file_name);
 			cout << endl << "Result saved to \"" << result_file_name << "\"" << endl;
+			data_wipe();
+			lib_wipe();
 			return;
 		}
 		else

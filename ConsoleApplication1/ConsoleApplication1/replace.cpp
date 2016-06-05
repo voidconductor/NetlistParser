@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <vector>
 
 void replace_one(struct symbol * initial_element)
 {
@@ -62,11 +63,14 @@ void replace_one(struct symbol * initial_element)
 		bool name_flag = true;
 		while (name_flag)
 		{
-			cout << " new element's name:";
+			cout << "new element's name:";
 			cin >> new_type;
 
-			if (symtab[new_type] == NULL)
+			if (symtab.count(new_type) == 0)
+			{
 				name_flag = false;
+				cout << symtab.count(new_type);
+			}
 			else
 				cout << "Error - name is occupied!" << endl;
 		}
@@ -90,17 +94,24 @@ void replace_one(struct symbol * initial_element)
 
 	for (int i = 0; i < initial_element->c_list->pins.size(); i++)
 	{
+		bool pin_flag = true;
 		bool conn_flag = true;
 		while (conn_flag)
 		{
 			cout << "Reconnect " << initial_element->c_list->conn_list[i]->name
 				<< " from " << initial_element->c_list->pins[i] << " to:" << endl;
-
+			//Если не осталось пинов - завершаем переподключение
+			pin_flag = false;
 			for (int j = 0; j < replacer->c_list->pins.size(); j++)
 			{
 				if (replacer->c_list->conn_list[j] == NULL)
+				{
 					cout << j << ". " << replacer->c_list->pins[j] << endl;
+					pin_flag = true;
+				}			
 			}
+			if (pin_flag == false)
+				break;
 
 			int chose_one;
 			cin >> chose_one;
@@ -120,11 +131,14 @@ void replace_one(struct symbol * initial_element)
 				conn_flag = false;
 			}
 		}
+		if (pin_flag == false)
+			break;
 	}
+	
 
-	int remainig = abs(((int)initial_element->c_list->pins.size() - (int)replacer->c_list->pins.size()));
+	int remainig = ((int)replacer->c_list->pins.size() - (int)initial_element->c_list->pins.size());
 
-	if (remainig)
+	if (remainig > 0)
 	{
 		cout << remainig << " pins not connected" << endl;
 		cout << "Suggested to add external outputs or inputs" << endl;
@@ -157,8 +171,9 @@ void replace_one(struct symbol * initial_element)
 						}
 
 						replacer->c_list->conn_list[i] = temp_input;
-
-						if (symtab[new_type] == NULL)
+						//Если это уже существующий выход или вход
+						//Его не нужно добавлять в заголовок модуля
+						if (temp_input->first_used == 0)
 							symtab[replacer->host_module]->c_list->add(temp_input, "external", -1);
 						io_flag = false;
 					}
@@ -175,8 +190,9 @@ void replace_one(struct symbol * initial_element)
 							temp_output->size = 0;
 						}
 						replacer->c_list->conn_list[i] = temp_output;
-
-						if (symtab[new_type] == NULL)
+						//Если это уже существующий выход или вход
+						//Его не нужно добавлять в заголовок модуля
+						if (temp_output->first_used == 0)
 							symtab[replacer->host_module]->c_list->add(temp_output, "external", -1);
 						io_flag = false;
 					}
@@ -190,3 +206,38 @@ void replace_one(struct symbol * initial_element)
 	}
 	rewire(replacer);
 }
+
+/*
+void replace_type(char * initial_type)
+{
+	vector<symbol *> replaced_list;
+	replaced_list = search(initial_type);
+	if (replaced_list.size() == 0)
+	{
+		cout << "Error-No elements of type " << initial_type << " found!" << endl;
+		return;
+	}
+	cout << "You want to replace all the elements of type " << initial_type << endl;
+	cout << "With elements of another type:";
+
+	string new_type = "";
+	cin >> new_type;
+
+	struct lib_ent * target_type;
+	struct symbol * replacer_type;
+
+	target_type = fpga_lib[new_type];
+	if (target_type == NULL)
+	{
+		cout << "Error-Type " << new_type << " doesn't exist in a library!" << endl;
+		return;
+	}
+	else
+	{
+		replacer_type = lookup(target_type->name);
+		replacer_type->type = mod_type;
+		replacer_type->size = 0;
+		replacer_type->host_module = replaced_list[0]->host_module;
+	}
+}
+*/

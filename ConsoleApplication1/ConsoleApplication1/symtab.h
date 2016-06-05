@@ -77,3 +77,5 @@ extern int total_wires_number;
 int print_connections(struct symbol *);
 //Замена одного элемента
 void replace_one(struct symbol *);
+//Замена всех элементов определённого типа
+void replace_type(char *);

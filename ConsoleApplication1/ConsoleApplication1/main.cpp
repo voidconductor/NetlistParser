@@ -219,18 +219,17 @@ parse_lib_again:	//warning, a wild GOTO appears
 		else if (!strcmp(com_inp, "info")) //Вывести подробную информацию об элементе
 		{
 			string search_arg = "";
-			struct symbol * tmp_res;
 			cout << "element name: ";
 
 			cin >> search_arg;
 
-			tmp_res = symtab[search_arg];
-			if (tmp_res == NULL)
+			if (symtab.count(search_arg) == 0)
 			{
 				cout << "Element not found-0x33" << endl;
 			}
 			else
 			{
+				struct symbol * tmp_res = symtab[search_arg];
 				cout << "-------------------------------------------------------------------" << endl;
 				cout << "Object:         " << tmp_res->name << endl;
 				cout << "Type:           " << dechipher(tmp_res->type) << endl;
@@ -274,13 +273,13 @@ parse_lib_again:	//warning, a wild GOTO appears
 
 			cin >> search_arg;
 
-			tmp_res = symtab[search_arg];
-			if (tmp_res == NULL)
+			if (symtab.count(search_arg) == 0)
 			{
 				cout << "Element not found-0x33" << endl;
 			}
 			else
 			{
+				tmp_res = symtab[search_arg];
 				print_connections(tmp_res);
 			}
 		}
@@ -292,13 +291,11 @@ parse_lib_again:	//warning, a wild GOTO appears
 			cout << "element name: ";
 
 			cin >> search_arg;
-
-			tmp_res = symtab[search_arg];
-			if (tmp_res == NULL)
-			{
+			if (symtab.count(search_arg) == 0)
 				cout << "Element not found-0x33" << endl;
-			}
-			else if (tmp_res->type != element)
+			else
+				tmp_res = symtab[search_arg];
+			if (tmp_res->type != element)
 				cout << "Element cannot be replaced" << endl;
 			else
 			{

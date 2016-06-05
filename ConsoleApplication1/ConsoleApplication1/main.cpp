@@ -179,7 +179,7 @@ parse_lib_again:	//warning, a wild GOTO appears
 						cout << dechipher((*it).second->type) << " ";
 					if ((*it).second->size > 1)
 						cout << "[" << (*it).second->size << ":" << (*it).second->lesser_bit << "]";
-					cout << (*it).second->name << endl;
+					cout << (*it).first << endl;
 					
 				}
 			}
@@ -259,7 +259,7 @@ parse_lib_again:	//warning, a wild GOTO appears
 						}
 					}
 				}
-				cout << "Size in bits:	" << tmp_res->size - tmp_res->lesser_bit + 1 << endl;
+				cout << "Size in bits:	" << tmp_res->size - tmp_res->lesser_bit << endl;
 				cout << "Host module:	" << tmp_res->host_module << endl;
 				cout << "Used times:     " << tmp_res->count << endl;
 				cout << "First used:     line #" << tmp_res->first_used << endl;
@@ -331,12 +331,12 @@ parse_lib_again:	//warning, a wild GOTO appears
 
 					cin >> yeno;
 					yeno = tolower(yeno);
+					fclose(check_existance);
 					if (yeno == 'y')
 						break;
 				}
 				else
 				{
-					fclose(check_existance);
 					break;
 				}
 			}

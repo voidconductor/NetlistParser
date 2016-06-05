@@ -51,6 +51,13 @@ dev_mod:	MODULE NAME args ';' def_list ENDMODULE
 			{
 				$2->type = module; 
 				$2->c_list = $3;
+				for (auto it = symtab.begin(); it != symtab.end(); ++it)
+				{
+					if (!strcmp((*it).second->host_module,"none")) 
+					{
+						(*it).second->host_module = $2->name;
+					}
+				}
 			}
 	;
 

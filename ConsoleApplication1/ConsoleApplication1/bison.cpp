@@ -448,9 +448,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    45,    45,    46,    47,    50,    57,    58,    61,    62,
-      65,    71,    79,    87,    94,   101,   109,   115,   123,   124,
-     130,   136,   142,   143,   150,   156
+       0,    45,    45,    46,    47,    50,    64,    65,    68,    69,
+      72,    78,    86,    94,   101,   108,   116,   122,   130,   131,
+     137,   143,   149,   150,   157,   163
 };
 #endif
 
@@ -1263,44 +1263,51 @@ yyreduce:
     {
 				(yyvsp[-4].symp)->type = module; 
 				(yyvsp[-4].symp)->c_list = (yyvsp[-3].conn);
+				for (auto it = symtab.begin(); it != symtab.end(); ++it)
+				{
+					if (!strcmp((*it).second->host_module,"none")) 
+					{
+						(*it).second->host_module = (yyvsp[-4].symp)->name;
+					}
+				}
 			}
-#line 1268 "bison.cpp" /* yacc.c:1646  */
+#line 1275 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 61 "bison.y" /* yacc.c:1646  */
+#line 68 "bison.y" /* yacc.c:1646  */
     {(yyval.conn) = (yyvsp[-1].conn);}
-#line 1274 "bison.cpp" /* yacc.c:1646  */
+#line 1281 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 62 "bison.y" /* yacc.c:1646  */
+#line 69 "bison.y" /* yacc.c:1646  */
     {(yyval.conn) = (yyvsp[-1].conn);}
-#line 1280 "bison.cpp" /* yacc.c:1646  */
+#line 1287 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 66 "bison.y" /* yacc.c:1646  */
+#line 73 "bison.y" /* yacc.c:1646  */
     {
 				connections * t_c = new connections; 
 				t_c->add((yyvsp[0].symp), "external", -1);
 				(yyval.conn) = t_c;
 			}
-#line 1290 "bison.cpp" /* yacc.c:1646  */
+#line 1297 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 72 "bison.y" /* yacc.c:1646  */
+#line 79 "bison.y" /* yacc.c:1646  */
     {
 				connections * t_c = (yyvsp[-2].conn);
 				t_c->add((yyvsp[0].symp), "external", -1);
 				(yyval.conn) = t_c;
 			}
-#line 1300 "bison.cpp" /* yacc.c:1646  */
+#line 1307 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 80 "bison.y" /* yacc.c:1646  */
+#line 87 "bison.y" /* yacc.c:1646  */
     {
 				(yyvsp[-2].symp)->type = wire; 
 				(yyvsp[-2].symp)->size = 1;
@@ -1308,120 +1315,120 @@ yyreduce:
 				(yyvsp[0].symp)->size = 1;
 				total_wires_number+=2;
 			}
-#line 1312 "bison.cpp" /* yacc.c:1646  */
+#line 1319 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 88 "bison.y" /* yacc.c:1646  */
+#line 95 "bison.y" /* yacc.c:1646  */
     { 
 				(yyvsp[0].symp)->type = wire; 
 				(yyvsp[0].symp)->size = 1;
 				total_wires_number++;
 			}
-#line 1322 "bison.cpp" /* yacc.c:1646  */
+#line 1329 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 95 "bison.y" /* yacc.c:1646  */
+#line 102 "bison.y" /* yacc.c:1646  */
     {
 				connections * t_c = new connections; 
 				t_c->add((yyvsp[-1].conn_tmp)->sym, (yyvsp[-3].symp)->name, (yyvsp[-1].conn_tmp)->index); 
 				(yyval.conn) = t_c;
 				delete (yyvsp[-1].conn_tmp);
 			}
-#line 1333 "bison.cpp" /* yacc.c:1646  */
+#line 1340 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 102 "bison.y" /* yacc.c:1646  */
+#line 109 "bison.y" /* yacc.c:1646  */
     {
 				connections * t_c = (yyvsp[-6].conn) ; 
 				t_c->add((yyvsp[-1].conn_tmp)->sym, (yyvsp[-3].symp)->name, (yyvsp[-1].conn_tmp)->index); 
 				(yyval.conn) = t_c;
 				delete (yyvsp[-1].conn_tmp);
 			}
-#line 1344 "bison.cpp" /* yacc.c:1646  */
+#line 1351 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 110 "bison.y" /* yacc.c:1646  */
+#line 117 "bison.y" /* yacc.c:1646  */
     {
 				tmp_conn * t_c = new struct tmp_conn; 
 				t_c->sym = (yyvsp[0].symp); 
 				(yyval.conn_tmp) = t_c;
 			}
-#line 1354 "bison.cpp" /* yacc.c:1646  */
+#line 1361 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 116 "bison.y" /* yacc.c:1646  */
+#line 123 "bison.y" /* yacc.c:1646  */
     {	
 				tmp_conn * t_c = new struct tmp_conn; 
 				t_c->sym = (yyvsp[-3].symp); 
 				t_c->index = (yyvsp[-1].size_arr); 
 				(yyval.conn_tmp) = t_c;
 			}
-#line 1365 "bison.cpp" /* yacc.c:1646  */
+#line 1372 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 123 "bison.y" /* yacc.c:1646  */
+#line 130 "bison.y" /* yacc.c:1646  */
     { (yyval.bit_size)[0] = 1; (yyval.bit_size)[1] = 0;}
-#line 1371 "bison.cpp" /* yacc.c:1646  */
+#line 1378 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 125 "bison.y" /* yacc.c:1646  */
+#line 132 "bison.y" /* yacc.c:1646  */
     {
 					(yyval.bit_size)[0] = (yyvsp[-3].size_arr);
 					(yyval.bit_size)[1] = (yyvsp[-1].size_arr);
 				}
-#line 1380 "bison.cpp" /* yacc.c:1646  */
+#line 1387 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 131 "bison.y" /* yacc.c:1646  */
+#line 138 "bison.y" /* yacc.c:1646  */
     { 
 					(yyvsp[-1].symp)->type = input; 
 					(yyvsp[-1].symp)->size = (yyvsp[-2].bit_size)[0];
 					(yyvsp[-1].symp)->lesser_bit = (yyvsp[-2].bit_size)[1];
 				}
-#line 1390 "bison.cpp" /* yacc.c:1646  */
+#line 1397 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 137 "bison.y" /* yacc.c:1646  */
+#line 144 "bison.y" /* yacc.c:1646  */
     { 
 					(yyvsp[-1].symp)->type = output; 
 					(yyvsp[-1].symp)->size = (yyvsp[-2].bit_size)[0];
 					(yyvsp[-1].symp)->lesser_bit = (yyvsp[-2].bit_size)[1];
 				}
-#line 1400 "bison.cpp" /* yacc.c:1646  */
+#line 1407 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 144 "bison.y" /* yacc.c:1646  */
+#line 151 "bison.y" /* yacc.c:1646  */
     {
 					(yyvsp[-1].symp)->type = wire; 
 					(yyvsp[-1].symp)->size = (yyvsp[-2].bit_size)[0];
 					(yyvsp[-1].symp)->lesser_bit = (yyvsp[-2].bit_size)[1];
 					total_wires_number++;
 				}
-#line 1411 "bison.cpp" /* yacc.c:1646  */
+#line 1418 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 151 "bison.y" /* yacc.c:1646  */
+#line 158 "bison.y" /* yacc.c:1646  */
     { 
 					(yyvsp[-1].symp)->type = reg; 
 					(yyvsp[-1].symp)->size = (yyvsp[-2].bit_size)[0];
 					(yyvsp[-1].symp)->lesser_bit = (yyvsp[-2].bit_size)[1];
 				}
-#line 1421 "bison.cpp" /* yacc.c:1646  */
+#line 1428 "bison.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 157 "bison.y" /* yacc.c:1646  */
+#line 164 "bison.y" /* yacc.c:1646  */
     {
 					(yyvsp[-3].symp)->type = mod_type;
 					(yyvsp[-3].symp)->size = 0;
@@ -1432,11 +1439,11 @@ yyreduce:
 					delete (yyvsp[-2].symp)->c_list;
 					(yyvsp[-2].symp)->c_list = (yyvsp[-1].conn);
 				}
-#line 1436 "bison.cpp" /* yacc.c:1646  */
+#line 1443 "bison.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1440 "bison.cpp" /* yacc.c:1646  */
+#line 1447 "bison.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1664,7 +1671,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 168 "bison.y" /* yacc.c:1906  */
+#line 175 "bison.y" /* yacc.c:1906  */
 
 
 extern void yyerror(char * s)
